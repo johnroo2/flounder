@@ -2,7 +2,10 @@ import { userService } from "@/services";
 
 interface User{
     username: string,
-    password: string
+    password: string,
+    firstname: string,
+    lastname: string,
+    email: string,
 }
 
 const useSignup = () => {

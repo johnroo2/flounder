@@ -42,14 +42,60 @@ export default function Signup(){
                 }>
                     <Form 
                     layout="vertical"
-                    className="w-[300px]"
+                    className="w-[400px]"
                     onFinish={handleSubmit}
                     form={form}>
-                        <Form.Item label="Username" name="username">
-                            <Input/>
+                        <Row className="flex flex-row justify-between">
+                            <Col span={11}>
+                                <Form.Item label="First Name" name="firstname"
+                                rules={[
+                                    {
+                                        required:true,
+                                        message:"Please fill out this field."
+                                    }
+                                ]}>
+                                    <Input maxLength={20}/>
+                                </Form.Item>
+                            </Col>
+                            <Col span={11}>
+                                <Form.Item label="Last Name" name="lastname"
+                                rules={[
+                                    {
+                                        required:true,
+                                        message:"Please fill out this field."
+                                    }
+                                ]}>
+                                    <Input maxLength={20}/>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Form.Item label="Email" name="email"
+                        rules={[
+                            {
+                                required:true,
+                                type:"email",
+                                message:"Please enter a valid email."
+                            }
+                        ]}>
+                            <Input required/>
                         </Form.Item>
-                        <Form.Item label="Password" name="password">
-                            <Input.Password/>
+                        <Form.Item label="Username" name="username"
+                        rules={[
+                            {
+                                required:true,
+                                message:"Please fill out this field."
+                            }
+                        ]}>
+                            <Input maxLength={20}/>
+                        </Form.Item>
+                        <Form.Item label="Password (min length 6)" name="password"
+                        rules={[
+                            {
+                                required:true,
+                                message:"Please fill out this field."
+                            }
+                        ]}>
+                            <Input.Password maxLength={20} minLength={6}/>
                         </Form.Item>
                         <Button type="primary" htmlType="submit" className="w-full bg-sky-600">
                             Sign Up

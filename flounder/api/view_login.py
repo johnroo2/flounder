@@ -5,8 +5,8 @@ from rest_framework import status
 from base.models import User
 from . import utils
 
-import jwt
 import datetime
+import jwt
 
 keyGenerator = utils.KeyGenerator()
 

@@ -10,7 +10,6 @@ export default function Users(){
     const fetch = async() => {
         try{
             const response = await userService.get();
-            console.log(response);
             setUserList(response);
         }
         catch(err){
@@ -26,7 +25,7 @@ export default function Users(){
                 <Title level={3}>List of Users</Title>
                 {userList.map((user:any, key:any) => {
                 return (
-                    <Row className="bg-sky-200 text-black p-2 text-lg w-[400px] rounded-md">
+                    <Row key={key} className="bg-sky-200 text-black p-2 text-lg w-[400px] rounded-md">
                         username: {user.username} <br/>
                         roles: {user.roles} <br/>
                         points: {user.points} <br/>
