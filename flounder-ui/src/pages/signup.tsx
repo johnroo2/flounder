@@ -36,7 +36,7 @@ export default function Signup(){
             <Col span={24} className="flex flex-col items-center justify-center">
                 <Card
                 title={
-                    <Title level={4} className="text-center pt-2">
+                    <Title level={4} className="text-center pt-4">
                         Signup Form
                     </Title>
                 }>

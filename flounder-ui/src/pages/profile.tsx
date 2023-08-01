@@ -13,7 +13,7 @@ export default function Profile(){
                 <Col span={24} className="flex items-center justify-center">
                     <Card
                     title={
-                        <Title level={4} className="text-center pt-2">
+                        <Title level={4} className="text-center pt-4">
                             Profile
                         </Title>
                     }>

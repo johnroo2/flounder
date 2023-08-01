@@ -1,12 +1,10 @@
 import useCurrentUser from '@/hooks/useCurrentUser';
-import useLogout from '@/hooks/useLogout';
 import { Button, Row, Col, Typography, Card } from 'antd'
 
 const {Title} = Typography
 
 export default function Index() {
   const {currentUser:currentUser} = useCurrentUser();
-  const {logout:logout} = useLogout();
 
   const getText = () => {
     console.log(currentUser)
@@ -20,7 +18,7 @@ export default function Index() {
       <Col span={24} className="flex items-center justify-center">
         <Card
         title={
-            <Title level={4} className="text-center pt-2">
+            <Title level={4} className="text-center pt-4">
                 Flounder 🐟
             </Title>
         }>
@@ -42,13 +40,6 @@ export default function Index() {
             <span className="text-md text-center">
               {getText()}
             </span>
-            {currentUser && <Button
-            type="primary"
-            className="bg-sky-600 hover:bg-sky-400 min-w-[200px]"
-            onClick={logout}
-            >
-              Logout
-            </Button>}
           </Col>
         </Card>
       </Col>
