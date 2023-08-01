@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.base-fullheight{
+    height: calc(100vh - 64px)
+}
+
+.base-flexcenter{
+    display:flex;
+    align-items:center;
+    justify-content: center;
+}
