@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework.exceptions import DoesNotExist
+from rest_framework.exceptions import NotFound
 from rest_framework import status
 from base.models import User
 from . import utils
@@ -12,14 +12,13 @@ keyGenerator = utils.KeyGenerator()
 decoder = utils.JWTDecoder()
 
 @api_view(['GET'])
-def auth(request):
-    decoder.checkAuthorization(request)
-    query = user.login(request.data["username"])
+def get(request, username):
+    #decoder.checkAuthorization(request)
 
-    found = User.objects.filter(username=query)
+    found = User.objects.filter(username=username)
     if found:
-        return Response(
-            
-        )
+        for find in found:
+            profile = find.profile(username)
+            return Response(profile)
     else:
-        raise DoesNotExist("User not found.")
+        raise NotFound("User not found.")

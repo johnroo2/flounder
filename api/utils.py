@@ -15,7 +15,6 @@ class JWTDecoder():
         pass
 
     def getExpiry(self, token, is_expired=True):
-        print("TOKEN" + token)
         current = datetime.utcnow()
 
         header, payload, signature = token.split('.')
@@ -26,7 +25,6 @@ class JWTDecoder():
         payload_dict = json.loads(base64.urlsafe_b64decode(payload.encode('utf-8')))
         stamp = payload_dict['exp']
         dt = datetime.utcfromtimestamp(stamp)
-        print(dt)
         return current > dt if is_expired else dt
 
     def checkAuthorization(self, request):

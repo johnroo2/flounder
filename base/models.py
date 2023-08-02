@@ -18,6 +18,19 @@ class User(models.Model):
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
 
+    def profile(self, username):
+        if username == self.username:
+            return {
+                "username": self.username,
+                "name": self.firstname + " " + self.lastname,
+                "email": self.email,
+                "about": self.about,
+                "isAdmin": self.isAdmin,
+                "isMod": self.isMod,
+                "image": self.image if self.image else None,
+                "points": self.points,
+                "createdAt": self.createdAt,
+            }
 
     def login(self, username, password):
         if username == self.username and password == self.password:
