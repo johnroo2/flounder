@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3c3ad5c8-eaed-4644-9408-51aae4f9c0f5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../flounder-ui/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../flounder-ui/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../flounder-ui/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/components/layout/Base.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/components/layout/Layout.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/components/layout/Navbar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/components/modals/DeleteUser.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/hooks/useCurrentUser.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/hooks/useLogin.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/hooks/useLogout.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/hooks/useSignup.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/pages/_app.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/pages/_document.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/pages/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/pages/login.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/pages/profile.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/pages/redirect/logout.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/pages/redirect/sessionend.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/pages/redirect/signedout.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/pages/signup.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/pages/users.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/services/authserivce.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/services/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/services/userservice.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/styles/globals.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/utils/authheader.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/utils/cookies.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/src/utils/servicewrapper.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../flounder-ui/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flounder-ui/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/../flounder-ui/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/flounder.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/serializers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/view_login.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/view_problem.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/view_user.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flounder/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flounder/asgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flounder/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flounder/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flounder/wsgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2TOEK4Ttmnijwsc9d4hONa6Q8cG" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/jliu/flounder/flounder&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3c3ad5c8-eaed-4644-9408-51aae4f9c0f5" name="Changes" comment="" />
+      <created>1690905659282</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1690905659282</updated>
+    </task>
+    <servers />
+  </component>
+</project>
