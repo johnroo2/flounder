@@ -1,11 +1,12 @@
 import { Input, Row, Col, Form, Typography, Button, notification, Card } from "antd"
 import { useSignup } from "@/hooks/useSignup";
-import router from "next/router";
+import {useRouter} from "next/router";
 import { CloseOutlined } from "@ant-design/icons";
 
 const {Title} = Typography
 
 export default function Signup(){
+    const router = useRouter();
     const [form] = Form.useForm();
     const {signup: signup} = useSignup();
 

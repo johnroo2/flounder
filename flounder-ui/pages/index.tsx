@@ -1,19 +1,8 @@
-import useCurrentUser from '@/hooks/useCurrentUser';
-import { useLogout} from '@/hooks/useLogout';
 import { Button, Row, Col, Typography, Card } from 'antd'
 
 const {Title} = Typography
 
 export default function Index() {
-  const {currentUser:currentUser} = useCurrentUser();
-  const {logout:logout} = useLogout();
-
-  const getText = () => {
-    return "(" + (currentUser ?
-      `Hello, ${currentUser.username}`:
-      "You are not signed in!") + ")"
-  }
-
   return (
     <Row className="base-fullheight base-flexcenter">
       <Col span={24} className="flex items-center justify-center">
@@ -38,9 +27,6 @@ export default function Index() {
             >
               Sign Up
             </Button>
-            <span className="text-md text-center">
-              {getText()}
-            </span>
           </Col>
         </Card>
       </Col>

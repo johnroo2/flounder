@@ -131,7 +131,7 @@ export default function Users(){
 
     return(
         <Row className="base-fullheight base-flexhorizontal pt-10">
-            <Col span={22}>
+            <Col span={20}>
                 <Card
                 className="rounded-md"
                 title={

@@ -13,8 +13,6 @@ decoder = utils.JWTDecoder()
 
 @api_view(['GET'])
 def get(request, username):
-    #decoder.checkAuthorization(request)
-
     found = User.objects.filter(username=username)
     if found:
         for find in found:
