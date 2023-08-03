@@ -21,7 +21,8 @@ def data_list(request):
             raise ValidationError("This username is already in use.")
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            found = User.objects.get(username=request.data["username"])
+            return Response(found.public(), status=status.HTTP_201_CREATED)
         return Response(serializer.data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     # elif request.method == 'DELETE':
     #     count = User.objects.all().delete()

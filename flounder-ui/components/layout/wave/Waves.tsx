@@ -1,6 +1,6 @@
 export const PolyWave = () => {
     return(
-        <div className="polywave-wrapper polywave-animation">
+        <div className="polywave-wrapper polywave-animation pointer-events-none" >
             <div className="polywave-inner">
                 <div className="bg-poly1 polywave polywave1"/>
             </div>

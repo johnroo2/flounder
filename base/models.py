@@ -18,6 +18,13 @@ class User(models.Model):
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
 
+    def public(self):
+        return {
+            "username": self.username,
+            "token": self.token,
+            "updatedAt": self.updatedAt,
+        }
+
     def profile(self, username):
         if username == self.username:
             return {
@@ -35,13 +42,7 @@ class User(models.Model):
 
     def login(self, username, password):
         if username == self.username and password == self.password:
-            return {
-                "username": self.username,
-                "firstname": self.firstname,
-                "lastname": self.lastname,
-                "token": self.token,
-                "updatedAt": self.updatedAt,
-            }
+            return self.public()
         return None
 
 
