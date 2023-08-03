@@ -9,6 +9,11 @@ class UserSerializer(serializers.ModelSerializer):
             'password': {'write_only': True}
         }
 
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("about",)
+
 class ProblemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Problem

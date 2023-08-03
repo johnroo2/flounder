@@ -1,5 +1,6 @@
 import axios, { AxiosInstance} from 'axios';
 import AuthorizationHeader from '@/utils/authheader';
+import servicewrapper from '@/utils/servicewrapper';
 
 export class ProfileService{
     protected readonly instance:AxiosInstance;
@@ -12,7 +13,11 @@ export class ProfileService{
         })
     }
 
-    profile = async(username:string) => {
+    get = async(username:string) => {
         return this.instance.get(`api/profile/${username}/`, AuthorizationHeader()).then((res) => res.data)
     }
+
+    put = servicewrapper(async(username:string, params:any) => {
+        return this.instance.put(`api/profile/${username}/`, params, AuthorizationHeader()).then((res) => res.data)
+    }, this)
 }

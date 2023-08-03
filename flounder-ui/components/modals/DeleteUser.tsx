@@ -20,9 +20,11 @@ export default function DeleteUser({open, close, details, refreshData}:props){
     const submit = async() => {
         try{
             await userService.delete(details.id);
-            makeNotification('success')
             if(details?.username === currentUser?.username){
                 forcelogout();
+            }
+            else{
+                makeNotification('success')
             }
         }
         catch(err){

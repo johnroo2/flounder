@@ -9,7 +9,7 @@ class User(models.Model):
     firstname = models.CharField(max_length=20)
     lastname = models.CharField(max_length=20)
     email = models.EmailField(unique=True)
-    about = models.CharField(max_length=400, blank=True)
+    about = models.CharField(max_length=1000, blank=True)
     isAdmin = models.BooleanField(default=False)
     isMod = models.BooleanField(default=False)
     image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
@@ -22,7 +22,8 @@ class User(models.Model):
         if username == self.username:
             return {
                 "username": self.username,
-                "name": self.firstname + " " + self.lastname,
+                "firstname": self.firstname,
+                "lastname": self.lastname,
                 "email": self.email,
                 "about": self.about,
                 "isAdmin": self.isAdmin,
@@ -36,6 +37,8 @@ class User(models.Model):
         if username == self.username and password == self.password:
             return {
                 "username": self.username,
+                "firstname": self.firstname,
+                "lastname": self.lastname,
                 "token": self.token,
                 "updatedAt": self.updatedAt,
             }

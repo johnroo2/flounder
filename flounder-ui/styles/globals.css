@@ -16,3 +16,10 @@
     display:flex;
     justify-content: center;
 }
+
+.ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item:hover,
+.ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item:hover,
+.ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title:hover,
+.ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title:hover{
+  background-color: white;
+}

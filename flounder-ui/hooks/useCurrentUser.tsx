@@ -1,7 +1,10 @@
 import cookies from "@/utils/cookies";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
 const useCurrentUser = () => {
+
+    const router = useRouter();
 
     const fetch = async() => {
         const response = await cookies.get('flounder-webapp-currentUser')
@@ -12,7 +15,7 @@ const useCurrentUser = () => {
     
     useEffect(() => {
         setfetch()
-    }, [cookies, cookies.cookies['currentUser']])
+    }, [cookies, cookies.cookies['currentUser'], router.asPath])
 
     const setfetch = async() => {
         const response = await cookies.get('flounder-webapp-currentUser')
