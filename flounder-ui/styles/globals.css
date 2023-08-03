@@ -23,3 +23,76 @@
 .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title:hover{
   background-color: white;
 }
+
+.bg-poly1{
+    background-image: url('./../public/polywave1.png');
+    opacity: 0.25;
+}
+
+.bg-poly2{
+    background-image: url('./../public/polywave2.png');
+    opacity: 0.25;
+}
+
+.bg-poly3{
+    background-image: url('./../public/polywave3.png');
+    opacity: 0.25;
+}
+
+@keyframes polywave-translate {
+    0% {
+        transform: translateX(0) translateZ(0) scaleY(0.5)
+    }
+    50% {
+        transform: translateX(-25%) translateZ(0) scaleY(0.2)
+    }
+    100% {
+        transform: translateX(-50%) translateZ(0) scaleY(0.5)
+    }
+}
+
+.polywave-wrapper {
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right:0;
+    top:0;
+    width: 100vw;
+}
+
+.polywave-inner{
+    position: absolute;
+    left:0;
+    right:0;
+    width: 100vw;
+    overflow: hidden;
+    height: 100%;
+}
+
+.polywave {
+    position: absolute;
+    left: 0;
+    width: 5760px;
+    height: 100%;
+    background-repeat: repeat no-repeat;
+    background-position: 0 bottom;
+    transform-origin: center bottom;
+}
+
+.polywave-animation .polywave1 {
+    animation: polywave-translate 11s linear infinite;
+}
+
+.polywave-animation .polywave2 {
+    animation: polywave-translate 14s linear infinite;
+}
+
+.polywave-animation .polywave3 {
+    animation: polywave-translate 20s linear infinite;
+}
+
+
+
+
+
