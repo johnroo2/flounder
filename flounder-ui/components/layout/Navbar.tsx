@@ -2,6 +2,7 @@ import { Typography, Button, Col, Dropdown, MenuProps} from "antd"
 import { useLogout } from "@/hooks/useLogout"
 import { UserOutlined } from "@ant-design/icons";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import Link from "next/link";
 
 const {Title, Text} = Typography
 
@@ -18,7 +19,7 @@ const Navbar = () => {
             {currentUser ? 
                 <Col className="flex flex-col p-2 bg-white/[0.5] gap-4">
                     <Text className="text-center">
-                        {currentUser.firstname} {currentUser.lastname}
+                        {currentUser.username}
                     </Text>
                     <Button
                     type="primary"
@@ -54,7 +55,7 @@ const Navbar = () => {
     return(
         <div className="flex flex-row w-screen h-[64px] bg-sky-600 items-center px-4 justify-between">
             <Title level={3} className="mt-4">
-                <span className="text-white">🐟 Flounder</span>
+                <Link href="/"><span className="text-white hover:text-white">🐟 Flounder</span></Link>
             </Title>
 
             <Dropdown menu={{ items }} trigger={["click"]}>

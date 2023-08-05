@@ -5,7 +5,7 @@ export const useLogin = () => {
     const login = async(username:string, password:string) => {
         try{
             const response = await authService.login(username, password)
-            if(response){
+            if(response?.username){
                 cookies.set("flounder-webapp-currentUser", JSON.stringify(response))
                 return {output:response, pass:true};
             }

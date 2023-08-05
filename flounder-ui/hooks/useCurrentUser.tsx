@@ -15,7 +15,7 @@ const useCurrentUser = () => {
     
     useEffect(() => {
         setfetch()
-    }, [cookies, cookies.cookies['currentUser'], router.asPath])
+    }, [cookies, cookies.cookies['flounder-webapp-currentUser'], router.asPath])
 
     const setfetch = async() => {
         const response = await cookies.get('flounder-webapp-currentUser')

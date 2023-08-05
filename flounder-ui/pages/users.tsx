@@ -133,13 +133,15 @@ export default function Users(){
         <Row className="base-fullheight base-flexhorizontal pt-10">
             <Col span={20}>
                 <Card
-                className="rounded-md"
                 title={
                     <Title level={4} className="pt-4">
                         Users
                     </Title>
                 }>
-                    <Table 
+                    <Table
+                    pagination={{
+                        pageSize:5
+                    }}
                     columns={columns}
                     dataSource={userList}>
 

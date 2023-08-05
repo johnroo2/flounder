@@ -2,8 +2,9 @@ import { Input, Row, Col, Form, Typography, Button, notification, Card } from "a
 import { useLogin } from "@/hooks/useLogin";
 import {useRouter} from "next/router";
 import { CloseOutlined } from "@ant-design/icons"
+import Link from "next/link";
 
-const {Title} = Typography
+const {Title} = Typography;
 
 export default function Login(){
     const router = useRouter();
@@ -13,7 +14,7 @@ export default function Login(){
     const handleSubmit = async(formvalues:any) => {
         const info = await login(formvalues.username, formvalues.password)
         if(info.pass){
-            router.push('/users');
+            router.push(info.output?.username ? `/profile/${info.output.username}` : "/");
         }
         else{
             makeNotification(info?.output?.response?.data)
@@ -45,15 +46,43 @@ export default function Login(){
                     className="w-[300px]"
                     onFinish={handleSubmit}
                     form={form}>
-                        <Form.Item label="Username" name="username">
-                            <Input required/>
+                        <Form.Item label="Username" name="username" 
+                        validateTrigger="onBlur"
+                        rules={[
+                            {
+                                required:true,
+                                message:"Please fill out this field."
+                            },
+                            // { validator: (rule:any, value:any) => {
+                            // const pattern = /^[^/]*$/;
+                            // if(value && !pattern.test(value)){
+                            //     alert('Character "/" is not allowed! (this is temporary)')
+                            //     Promise.reject();
+                            // }
+                            // else{
+                                
+                            //     Promise.resolve();
+                            // }
+                    
+                            // }}
+                        ]}>
+                            <Input/>
                         </Form.Item>
-                        <Form.Item label="Password" name="password">
-                            <Input.Password required/>
+                        <Form.Item label="Password" name="password"
+                        rules={[
+                            {
+                                required:true,
+                                message:"Please fill out this field."
+                            }
+                        ]}>
+                            <Input.Password/>
                         </Form.Item>
                         <Button type="primary" htmlType="submit" className="w-full bg-sky-600">
                             Login
                         </Button>
+                        <p className="mt-4">
+                            Don't have an account? Sign up <Link className="text-sky-600" href={"/signup"}>here</Link>!
+                        </p>
                     </Form>
                 </Card>
             </Col>

@@ -2,9 +2,10 @@ import {useRouter} from "next/router"
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { useState, useEffect } from "react";
 import { useProfile } from "@/hooks/useProfile";
-import {Row, Col, Card, Typography, Image, Divider, Tooltip} from 'antd';
+import {Row, Col, Card, Typography, Image, Tooltip, Upload, notification} from 'antd';
+import type { UploadFile, UploadProps } from "antd";
 import dayjs from "dayjs";
-import { EditOutlined } from "@ant-design/icons";
+import { CloseOutlined, EditOutlined, UploadOutlined } from "@ant-design/icons";
 import EditProfile from "@/components/modals/EditProfile";
 
 const {Title, Text} = Typography
@@ -36,9 +37,29 @@ export default function Profile(){
             }
             catch(err){
                 console.log(err);
+                setNotFound(true);
             }
         }
     }
+
+    const props: UploadProps = {
+        beforeUpload: (file) => {
+            const allowed = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
+            const isAllowed = allowed.findIndex((item:any)=>file.type===item) > -1
+            if (!isAllowed) {
+                notification.open({
+                    message: "Upload failed",
+                    description: `${file.name} is not supported. Supported image types are
+                    png, jpeg, gif`,
+                    icon: <CloseOutlined style={{color: '#ff0303',}}/>
+                })
+            }
+            return isAllowed || Upload.LIST_IGNORE;
+        },
+        onChange: (info) => {
+          console.log(info.fileList);
+        },
+    };
 
     return(
         <>
@@ -65,8 +86,16 @@ export default function Profile(){
                         <Col span={6} className="flex flex-col gap-6">
                             <Image
                             width={"100%"}
-                            src={"/flounder.png"}
+                            src={'/flounder.png'}
                             />
+                            {(currentUser && currentUser?.username === username) && 
+                            <Upload maxCount={1} {...props}>
+                                <span className="flex flex-row gap-2 text-sky-600 hover:text-sky-400
+                                    transition-all duration-300 items-center">
+                                    <UploadOutlined/> 
+                                    Change Profile Picture
+                                </span>
+                            </Upload>}
                             <Col className="flex flex-col gap-2">
                                 <Text><b>Name:</b> {`${userData.firstname} ${userData.lastname}`}</Text>
                                 <Text><b>Email:</b> {`${userData.email}`}</Text>

@@ -11,7 +11,7 @@ decoder = utils.JWTDecoder()
 @api_view(['GET', 'POST'])
 def data_list(request):
     if request.method == 'GET':
-        decoder.checkAuthorization(request)
+        #decoder.checkAuthorization(request)
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
@@ -31,7 +31,7 @@ def data_list(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def data_detail(request, pk):
-    decoder.checkAuthorization(request)
+    #decoder.checkAuthorization(request)
     try:
         focus = User.objects.get(pk=pk)
     except User.DoesNotExist:

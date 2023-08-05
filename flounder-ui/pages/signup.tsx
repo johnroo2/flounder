@@ -2,6 +2,7 @@ import { Input, Row, Col, Form, Typography, Button, notification, Card } from "a
 import { useSignup } from "@/hooks/useSignup";
 import {useRouter} from "next/router";
 import { CloseOutlined } from "@ant-design/icons";
+import Link from "next/link";
 
 const {Title} = Typography
 
@@ -11,9 +12,10 @@ export default function Signup(){
     const {signup: signup} = useSignup();
 
     const handleSubmit = async(formvalues:any) => {
+        console.log("EHLLOOO");
         const info = await signup(formvalues);
         if(info.pass){
-            router.push('/users');
+            router.push(info.output?.username ? `/profile/${info.output.username}` : "/");
         }
         else{
             makeNotification(info?.output?.response?.data)
@@ -80,12 +82,23 @@ export default function Signup(){
                         ]}>
                             <Input required/>
                         </Form.Item>
-                        <Form.Item label="Username" name="username"
+                        <Form.Item label="Username" name="username" 
+                        validateTrigger="onBlur"
                         rules={[
                             {
                                 required:true,
                                 message:"Please fill out this field."
-                            }
+                            },
+                            // { validator: (rule:any, value:any) => {
+                            //     const pattern = /^[^/]*$/;
+                            //     if(value && !pattern.test(value)){
+                            //         alert('Character "/" is not allowed! (this is temporary)')
+                            //         Promise.reject();
+                            //     }
+                            //     else{
+                            //         Promise.resolve();
+                            //     }
+                            // }}
                         ]}>
                             <Input maxLength={20}/>
                         </Form.Item>
@@ -101,6 +114,9 @@ export default function Signup(){
                         <Button type="primary" htmlType="submit" className="w-full bg-sky-600">
                             Sign Up
                         </Button>
+                        <p className="mt-4">
+                            Already have an account? Log in <Link className="text-sky-600" href={"/login"}>here</Link>!
+                        </p>
                     </Form>
                 </Card>
             </Col>

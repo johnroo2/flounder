@@ -81,15 +81,15 @@
 }
 
 .polywave-animation .polywave1 {
-    animation: polywave-translate 11s linear infinite;
+    animation: polywave-translate 12s linear infinite;
 }
 
 .polywave-animation .polywave2 {
-    animation: polywave-translate 14s linear infinite;
+    animation: polywave-translate 18s linear infinite;
 }
 
 .polywave-animation .polywave3 {
-    animation: polywave-translate 20s linear infinite;
+    animation: polywave-translate 22s linear infinite;
 }
 
 
