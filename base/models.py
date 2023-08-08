@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 from api import utils
 
 # Create your models here.
@@ -49,11 +50,14 @@ class User(models.Model):
             return self.public()
         return None
 
+def getDefaultOptions():
+    return []
 
 class Problem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.CharField(max_length=10000)
     image = models.ImageField(upload_to='problem_images/', null=True, blank=True)
+    options = ArrayField(models.CharField(max_length=150), size=8, default=getDefaultOptions)
     answer = models.IntegerField()
     solution = models.CharField(max_length=10000, blank=True)
     value = models.IntegerField()

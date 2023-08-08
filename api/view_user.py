@@ -24,10 +24,7 @@ def data_list(request):
             found = User.objects.get(username=request.data["username"])
             return Response(found.public(), status=status.HTTP_201_CREATED)
         return Response(serializer.data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    # elif request.method == 'DELETE':
-    #     count = User.objects.all().delete()
-    #     return Response({'message': '{} users deleted successfully!'.format(count[0])},
-    #                         status=status.HTTP_204_NO_CONTENT)
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def data_detail(request, pk):

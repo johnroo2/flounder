@@ -35,4 +35,5 @@
 /flounder-ui/next-env.d.ts
 
 db.sqlite3
+data.json
 profile_images
