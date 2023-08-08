@@ -102,48 +102,17 @@ export default function Index() {
           </Col>
         </Row>
       ) : (
-        <Row className="base-fullheight base-flexhorizontal pt-10 max-h-[90%] overflow-y-scroll">
+        <Row className="base-fullheight base-flexhorizontal pt-4">
           <Col span={20}>
             <Card
+              className="h-[calc(100vh_-_64px_-_2rem)] overflow-y-scroll"
               title={
-                <Row className="flex flex-row justify-between">
+                <Row>
                   <Title level={3} className="pt-4">
                     Dashboard ⚓ <br />
                     <span className="text-[0.75em]">Hello, {currentUser.username}!</span>
                     
                   </Title>
-                  <Row className="flex flex-row gap-3 items-center mr-2">
-                    <Button
-                    type="primary"
-                    className="bg-sky-500"
-                    href={`/profile/${currentUser.username}`}>
-                      Profile
-                    </Button>
-                    <Button
-                    type="primary"
-                    className="bg-sky-500"
-                    href="/users"> 
-                      Users
-                    </Button>
-                    <Button
-                    type="primary"
-                    className="bg-sky-500"
-                    href="https://artofproblemsolving.com/">
-                      Problems
-                    </Button>
-                    <Button
-                    type="primary"
-                    className="bg-sky-500"
-                    href="/about">
-                      About
-                    </Button>
-                    <Button
-                    type="primary"
-                    className="bg-sky-500"
-                    onClick={logout}>
-                      Logout
-                    </Button>
-                  </Row>
                 </Row>
               }
             >

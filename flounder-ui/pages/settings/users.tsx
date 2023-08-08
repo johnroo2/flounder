@@ -2,7 +2,6 @@ import { userService } from "@/services"
 import { useState, useEffect } from "react"
 import {Row, Col, Card, Table, Typography, Button} from "antd"
 import dayjs from "dayjs"
-import { CheckOutlined, CloseOutlined, DeleteOutlined } from "@ant-design/icons"
 import DeleteUser from "@/components/modals/DeleteUser"
 
 const {Text, Title} = Typography
@@ -130,7 +129,7 @@ export default function Users(){
     ]
 
     return(
-        <Row className="base-fullheight base-flexhorizontal pt-10">
+        <Row className="base-fullheight base-flexhorizontal pt-4">
             <Col span={20}>
                 <Card
                 title={
@@ -139,6 +138,7 @@ export default function Users(){
                     </Title>
                 }>
                     <Table
+                    size="small"
                     pagination={{
                         pageSize:5
                     }}

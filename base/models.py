@@ -25,6 +25,8 @@ class User(models.Model):
             "username": self.username,
             "token": self.token,
             "updatedAt": self.updatedAt,
+            "isAdmin": self.isAdmin,
+            "isMod": self.isMod,
         }
 
     def profile(self, username):

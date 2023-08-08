@@ -1,16 +1,13 @@
-import { PropsWithChildren, useEffect } from "react"
+import { PropsWithChildren } from "react"
 import Navbar from "./Navbar"
-import { PolyWave } from "./wave/Waves"
 
 export default function Layout(props:PropsWithChildren){
-
     return(
         <div>
             <Navbar/>
-            <div className="bg-sky-50 max-h-[calc(100vh_-_64px)] h-[calc(100vh_-_64px)]">
+            <div className="max-h-[calc(100vh_-_64px)] h-[calc(100vh_-_64px)] z-[100] relative overflow-x-hidden">
                 {props.children}
             </div>
-            <PolyWave/>
         </div>
     )
 }

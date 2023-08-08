@@ -121,7 +121,7 @@ export default function Profile(){
     return(
         <>
         {!notFound && userData &&
-        <Row className="base-fullheight base-flexhorizontal pt-10">
+        <Row className="base-fullheight base-flexhorizontal pt-4">
             <Col span={16}>
                 <Card
                 title={
@@ -177,7 +177,7 @@ export default function Profile(){
         </Row>
         }
         {notFound && 
-        <Row className="base-fullheight base-flexhorizontal pt-10">
+        <Row className="base-fullheight base-flexhorizontal pt-4">
             <Col span={16}>
                 <Card
                 title={
