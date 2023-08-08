@@ -53,11 +53,17 @@ export default function Index() {
                 backgroundColor: '#7dd3fc',
                 data: data.map((row) => row.count),
                 borderColor: '#bae6fd',
-                tension: 0.05,
                 pointRadius: 6,
               },
             ],
           },
+          options: {
+            plugins: {
+              legend: {
+                  display: false
+              },
+            },
+          }
         });
       }
     };

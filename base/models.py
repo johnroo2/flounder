@@ -1,7 +1,9 @@
 from django.db import models
+from api import utils
 
 # Create your models here.
 
+imageHandler = utils.ImageToBase64()
 
 class User(models.Model):
     username = models.CharField(max_length=20, unique=True)
@@ -35,7 +37,7 @@ class User(models.Model):
                 "about": self.about,
                 "isAdmin": self.isAdmin,
                 "isMod": self.isMod,
-                "image": self.image if self.image else None,
+                "image": imageHandler.convertImage(self.image.url) if self.image else None,
                 "points": self.points,
                 "createdAt": self.createdAt,
             }

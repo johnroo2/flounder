@@ -10,9 +10,11 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
 class ProfileSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField()
+    
     class Meta:
         model = User
-        fields = ("about",)
+        fields = ("about", "image")
 
 class ProblemSerializer(serializers.ModelSerializer):
     class Meta:
