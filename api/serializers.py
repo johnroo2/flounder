@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from base.models import User, Problem
+from base.models import User, Problem, PointUpdate
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,4 +17,9 @@ class ProfileSerializer(serializers.ModelSerializer):
 class ProblemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Problem
+        fields = '__all__'
+
+class PointUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PointUpdate
         fields = '__all__'

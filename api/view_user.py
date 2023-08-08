@@ -1,9 +1,9 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError, NotFound
 from rest_framework import status
-from base.models import User
-from .serializers import UserSerializer
+from base.models import User, PointUpdate, Problem
+from .serializers import UserSerializer, ProfileSerializer
 from . import utils
 
 decoder = utils.JWTDecoder()
@@ -24,6 +24,42 @@ def data_list(request):
             found = User.objects.get(username=request.data["username"])
             return Response(found.public(), status=status.HTTP_201_CREATED)
         return Response(serializer.data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['GET', 'PUT'])
+def data_detail_profile(request, username):
+    if request.method == "GET":
+        found = User.objects.filter(username=username)
+        if found:
+            for find in found:
+                profile = find.profile(username)
+                return Response(profile)
+        else:
+            raise NotFound("User not found.")
+    elif request.method == "PUT":
+        focus = User.objects.get(username=username)
+        prof_serializer = ProfileSerializer(focus, data=request.data)
+        if prof_serializer.is_valid():
+            prof_serializer.save()
+            return Response(prof_serializer.data, status=status.HTTP_202_ACCEPTED)
+        return Response(prof_serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+@api_view(['GET'])
+def data_detail_points(request, username):
+    #decoder.checkAuthorization(request)
+    found = User.objects.filter(username=username)
+    if found:
+        for find in found:
+            pointupdates = PointUpdate.objects.filter(user=find.id)
+            sum = 0
+            updates = []
+            if pointupdates:
+                for update in pointupdates:
+                    problems = Problem.objects.filter(id=update.problem.id)
+                    if problems:
+                        for problem in problems:
+                            sum += problem.value
+                            updates.append({'id':problem.id, 'value':problem.value, 'date':update.createdAt})
+            return Response({'points':sum, 'history':updates}, status=status.HTTP_200_OK)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])

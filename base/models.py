@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.utils.crypto import get_random_string
 from api import utils
 
 # Create your models here.
@@ -16,7 +17,6 @@ class User(models.Model):
     isAdmin = models.BooleanField(default=False)
     isMod = models.BooleanField(default=False)
     image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
-    points = models.IntegerField(default=0, blank=True)
     token = models.CharField(max_length=1000, null=True, blank=True)
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
@@ -41,7 +41,6 @@ class User(models.Model):
                 "isAdmin": self.isAdmin,
                 "isMod": self.isMod,
                 "image": imageHandler.convertImage(self.image.url) if self.image else None,
-                "points": self.points,
                 "createdAt": self.createdAt,
             }
 
@@ -50,14 +49,23 @@ class User(models.Model):
             return self.public()
         return None
 
-def getDefaultOptions():
-    return []
-
 class Problem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.CharField(max_length=10000)
     image = models.ImageField(upload_to='problem_images/', null=True, blank=True)
-    options = ArrayField(models.CharField(max_length=150), size=8, default=getDefaultOptions)
+    key = models.CharField(default=get_random_string(20), unique=True)
+    options = ArrayField(models.CharField(max_length=150), size=6, default=list)
     answer = models.IntegerField()
     solution = models.CharField(max_length=10000, blank=True)
     value = models.IntegerField()
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
+
+class PointUpdate(models.Model):
+    problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ['problem', 'user']

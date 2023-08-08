@@ -7,7 +7,6 @@ import type { UploadProps } from "antd";
 import dayjs from "dayjs";
 import { CloseOutlined, EditOutlined, UploadOutlined } from "@ant-design/icons";
 import EditProfile from "@/components/modals/EditProfile";
-import { profileService } from "@/services";
 import { RcFile } from "antd/es/upload";
 
 const {Title, Text} = Typography
@@ -28,6 +27,7 @@ export default function Profile(){
         if(typeof username === "string"){
             try{
                 const info = await get(username)
+
                 if(info.pass){
                     setUserData(info.output)
                 }
@@ -55,7 +55,7 @@ export default function Profile(){
             const blob = new Blob([new Uint8Array(byteArrays)], { type: 'image/jpeg' });
             const formData = new FormData();
             formData.append('image', blob, 'image.jpg');
-            await profileService.put(username, formData)
+            await put(username, formData)
             await fetch();
         }
         catch(err){

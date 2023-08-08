@@ -1,74 +1,12 @@
 import { Button, Row, Col, Typography, Card, List, Segmented } from 'antd';
 import useCurrentUser from '@/hooks/useCurrentUser';
-import { Chart, ChartItem, registerables } from 'chart.js';
-import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { useLogout } from '@/hooks/useLogout';
-
-Chart.register(...registerables)
+import PointsChart from '@/components/chart/PointsChart';
 
 const { Title } = Typography;
 
 export default function Index() {
   const { currentUser: currentUser } = useCurrentUser();
-  const { logout: logout} = useLogout();
-  const [chartStack, setChartStack] = useState<string>("Total");
-  const chartRef = useRef<Chart | null>(null);
-
-  useEffect(() => {
-    const data = (chartStack === "Total") ? 
-    [
-      { month: "Feb", count: 4 },
-      { month: "Mar", count: 5 },
-      { month: "Apr", count: 20 },
-      { month: "May", count: 27 },
-      { month: "Jun", count: 33 },
-      { month: "Jul", count: 43 },
-      { month: "Aug", count: 45 },
-    ]
-    : 
-    [
-      { month: "Feb", count: 4 },
-      { month: "Mar", count: 1 },
-      { month: "Apr", count: 15 },
-      { month: "May", count: 7 },
-      { month: "Jun", count: 6 },
-      { month: "Jul", count: 10 },
-      { month: "Aug", count: 2 },
-    ];
-
-    const createChart = () => {
-      if (document.getElementById('points-chart')) {
-        if (chartRef.current) {
-          chartRef.current.destroy();
-        }
-
-        chartRef.current = new Chart(document.getElementById('points-chart') as ChartItem, {
-          type: 'line',
-          data: {
-            labels: data.map((row) => row.month),
-            datasets: [
-              {
-                label: currentUser.username ? currentUser.username : "Points",
-                backgroundColor: '#7dd3fc',
-                data: data.map((row) => row.count),
-                borderColor: '#bae6fd',
-                pointRadius: 6,
-              },
-            ],
-          },
-          options: {
-            plugins: {
-              legend: {
-                  display: false
-              },
-            },
-          }
-        });
-      }
-    };
-    createChart();
-  }, [chartStack])
 
   return (
     <>
@@ -157,12 +95,8 @@ export default function Index() {
                     <Title level={4}>
                       Your Points
                     </Title>
-                    <Segmented
-                    options={['Total', 'Monthly']} 
-                    value={chartStack} 
-                    onChange={setChartStack as () => void}/>
                   </Row>
-                  <canvas id="points-chart" className=""/>
+                  <PointsChart currentUser={currentUser}/>
                 </Col>
               </Row>
             </Card>
