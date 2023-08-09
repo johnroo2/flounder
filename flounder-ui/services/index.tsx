@@ -3,7 +3,7 @@ import { UserService } from "./userservice";
 import { ProfileService } from "./profileservice";
 import { PointService } from "./pointservice";
 import { PointUpdateService } from "./pointupdateservice";
-import { ProblemService } from "./problemService";
+import { ProblemService } from "./problemservice";
 
 const url = "http://127.0.0.1:8000/"
 
