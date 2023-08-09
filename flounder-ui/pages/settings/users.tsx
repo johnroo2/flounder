@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import {Row, Col, Card, Table, Typography, Button} from "antd"
 import dayjs from "dayjs"
 import DeleteUser from "@/components/modals/DeleteUser"
+import { ReloadOutlined } from "@ant-design/icons"
 
 const {Text, Title} = Typography
 
@@ -159,11 +160,11 @@ export default function Users(){
                         <Title level={4} className="pt-4">
                             Users
                         </Title>
-                        <Button className="mt-4"
-                        type="primary"
-                        ghost
-                        onClick={() => {fetch()}}>
-                            Refresh
+                        <Button className="rounded-full"
+                            type="primary"
+                            ghost
+                            onClick={() => {fetch()}}>
+                            <ReloadOutlined/>
                         </Button>
                     </Row>
                 }>

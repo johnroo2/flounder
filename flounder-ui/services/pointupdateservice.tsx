@@ -14,7 +14,7 @@ export class PointUpdateService {
     }
 
     get = servicewrapper((params: any, id:any) => {
-        return this.instance.get(`api/pointupdate/${id}`, AuthorizationHeader()).then((res) => res.data);
+        return this.instance.get(`api/pointupdate/${id ? id : ''}`, AuthorizationHeader()).then((res) => res.data);
     }, this)
 
     post = servicewrapper((params: any) => {

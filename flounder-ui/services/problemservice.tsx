@@ -14,7 +14,7 @@ export class ProblemService {
     }
 
     get = servicewrapper((params: any, id:any) => {
-        return this.instance.get(`api/problem/${id}`, AuthorizationHeader()).then((res) => res.data);
+        return this.instance.get(`api/problem/${id ? id : ''}`, AuthorizationHeader()).then((res) => res.data);
     }, this)
 
     post = servicewrapper((params: any) => {

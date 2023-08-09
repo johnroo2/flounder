@@ -1,4 +1,4 @@
-import { Typography, Button, Col, Dropdown, MenuProps, Switch, Row} from "antd"
+import { Typography, Button, Col, Dropdown, MenuProps, Switch, Row, Tooltip} from "antd"
 import { useLogout } from "@/hooks/useLogout"
 import { UserOutlined, SettingOutlined } from "@ant-design/icons";
 import useCurrentUser from "@/hooks/useCurrentUser";
@@ -120,12 +120,16 @@ const Navbar = () => {
                         checkedChildren="On" unCheckedChildren="Off" />
                     </Row>
                     {currentUser && (currentUser.isAdmin || currentUser.isMod) &&
+                    <Tooltip title="Admin Settings" placement="bottom">
                     <Link href={'/settings'}>
                         <SettingOutlined className="text-white text-[1.75em]"/>
-                    </Link>}
-                    <Dropdown menu={{ items }} trigger={["click"]}>
-                        <UserOutlined className="text-white text-[1.75em]"/>
-                    </Dropdown>
+                    </Link>
+                    </Tooltip>}
+                    <Tooltip title="User" placement="bottom">
+                        <Dropdown menu={{ items }} trigger={["click"]}>
+                            <UserOutlined className="text-white text-[1.75em]"/>
+                        </Dropdown>
+                    </Tooltip>
                 </Row>
             </Col>
         </div>

@@ -3,6 +3,8 @@ import { useState, useEffect } from "react"
 import {Row, Col, Card, Table, Typography, Button} from "antd"
 import dayjs from "dayjs"
 import DeleteProblem from "@/components/modals/DeleteProblem"
+import { PlusOutlined, ReloadOutlined } from "@ant-design/icons"
+import AddProblem from "@/components/modals/AddProblem"
 
 const {Text, Title, Paragraph} = Typography
 
@@ -11,6 +13,7 @@ export default function Problems(){
     const [loading, setLoading] = useState<boolean>(false);
     const [focusProblem, setFocusProblem] = useState<any>(null);
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
+    const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
 
     const fetch = async() => {
         setLoading(true);
@@ -33,7 +36,7 @@ export default function Problems(){
                     }
                 }
                 return clone;
-            })(await problemService.get())
+            })(await problemService.get({}))
             setProblemList([...response])
             setLoading(false)
         }
@@ -156,13 +159,22 @@ export default function Problems(){
                     <Title level={4} className="pt-4">
                         Problems
                     </Title>
-                    <Button className="mt-4"
-                    type="primary"
-                    ghost
-                    onClick={() => {fetch()}}>
-                        Refresh
-                    </Button>
-                </Row>
+                        <Row className="flex flex-row mt-4 gap-4 justify-center">
+                            <Button className="bg-sky-600"
+                            type="primary"
+                            onClick={() => {setAddModalOpen(true)}}>
+                                <Row className="flex flex-row items-center gap-1">
+                                    Create <PlusOutlined/>
+                                </Row>
+                            </Button>
+                            <Button className="rounded-full"
+                            type="primary"
+                            ghost
+                            onClick={() => {fetch()}}>
+                                <ReloadOutlined/>
+                            </Button>
+                        </Row>
+                    </Row>
                 }>
                     <Table
                     size="small"
@@ -180,6 +192,10 @@ export default function Problems(){
             details={focusProblem}
             open={deleteModalOpen}
             close={() => {setDeleteModalOpen(false)}}
+            refreshData={fetch}/>
+            <AddProblem
+            open={addModalOpen}
+            close={() => {setAddModalOpen(false)}}
             refreshData={fetch}/>
         </Row>
     )

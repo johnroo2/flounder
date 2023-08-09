@@ -69,7 +69,7 @@ export default function EditProfile({open, details, close, refreshData, put}:pro
         }>
             <Form onFinish={submit} layout="vertical" form={form}>
                 <Form.Item label="About" name="about">
-                    <TextArea maxLength={1000} autoSize/>
+                    <TextArea maxLength={1000} autoSize showCount/>
                 </Form.Item>
                 <Divider/>
                 <Row className="flex flex-row gap-2 justify-end">
