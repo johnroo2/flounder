@@ -138,6 +138,17 @@ export default function Problems(){
             })
         },
         {
+            title: "Image",
+            key: "image",
+            dataIndex: "image",
+            width: 75,
+            sorter:true,
+            align: "center",
+            render: ((text:string, item:any) => {
+                return <Text>{item.image ? "Y" : "N"}</Text>
+            })
+        },
+        {
             title: "Actions",
             key: "actions",
             width: 100,
