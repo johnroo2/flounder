@@ -23,10 +23,19 @@ export default function Problems(){
         try{
             const response = await (async(userlessList:Array<any>) => {
                 const clone = [...userlessList]
-                console.log(clone)
+                const memo = new Map()
                 for(const problem of userlessList){
                     try{
-                        const userresponse = await userService.get({}, problem.user)
+                        let userresponse:any;
+                        if(memo.has(problem.user)){
+                            userresponse = memo.get(problem.user)
+                        }
+                        else{
+                            userresponse = await userService.get({}, problem.user)
+                            if(userresponse){
+                                memo.set(problem.user, {...userresponse})
+                            }
+                        }
                         clone.forEach((item:any) => {
                             if(item.user === problem.user && userresponse){
                                 item.creator = userresponse?.username;

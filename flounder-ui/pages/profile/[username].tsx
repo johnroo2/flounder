@@ -48,7 +48,6 @@ export default function Profile(){
     }
 
     const handleSubmit = async(formData:FormData) => {
-        console.log(formData.get('image'))
         await put(username, formData);
         await fetch();
     }

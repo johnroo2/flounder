@@ -30,7 +30,6 @@ export default function AddProblem({open, close, refreshData, currentUser}:props
     }, [form, open])
 
     const handleImage = (formData:FormData) => {
-        console.log(formData.get('image'));
         setImageData(formData);
         ((image:File) => {
             const reader = new FileReader();
