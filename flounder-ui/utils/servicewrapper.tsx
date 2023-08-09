@@ -1,4 +1,3 @@
-import cookies from "./cookies"
 import { useLogout } from "@/hooks/useLogout";
 
 const {sessionend:sessionend} = useLogout();

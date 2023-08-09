@@ -14,7 +14,7 @@ export class UserService {
     }
 
     get = servicewrapper((params:any, id:any) => {
-        return this.instance.get(`api/user/${id ? id : ''}`, AuthorizationHeader()).then((res) => res.data);
+        return this.instance.get(`api/user/${id ? `${id}/` : ''}`, AuthorizationHeader()).then((res) => res.data);
     }, this)
 
     post = servicewrapper((params: any) => {
@@ -22,10 +22,10 @@ export class UserService {
     }, this)
 
     delete = servicewrapper((id: any) => {
-        return this.instance.delete(`api/user/${id}`, AuthorizationHeader()).then((res) => res.data);
+        return this.instance.delete(`api/user/${id ? `${id}/` : ''}`, AuthorizationHeader()).then((res) => res.data);
     }, this)
 
     put = servicewrapper((params: any, id: any) => {
-        return this.instance.put(`api/user/${id}`, params, AuthorizationHeader()).then((res) => res.data);
+        return this.instance.put(`api/user/${id ? `${id}/` : ''}`, params, AuthorizationHeader()).then((res) => res.data);
     }, this)
 }

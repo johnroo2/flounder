@@ -18,6 +18,7 @@ export class ProfileService{
     }
 
     put = servicewrapper(async(username:string, params:any) => {
+        console.log(params)
         return this.instance.put(`api/profile/${username}/`, params, AuthorizationHeader()).then((res) => res.data)
     }, this)
 }

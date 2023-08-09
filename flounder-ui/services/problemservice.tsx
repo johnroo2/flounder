@@ -14,7 +14,7 @@ export class ProblemService {
     }
 
     get = servicewrapper((params: any, id:any) => {
-        return this.instance.get(`api/problem/${id ? id : ''}`, AuthorizationHeader()).then((res) => res.data);
+        return this.instance.get(`api/problem/${id ? `${id}/` : ''}`, AuthorizationHeader()).then((res) => res.data);
     }, this)
 
     post = servicewrapper((params: any) => {
@@ -22,10 +22,14 @@ export class ProblemService {
     }, this)
 
     delete = servicewrapper((id: any) => {
-        return this.instance.delete(`api/problem/${id}`, AuthorizationHeader()).then((res) => res.data);
+        return this.instance.delete(`api/problem/${id ? `${id}/` : ''}`, AuthorizationHeader()).then((res) => res.data);
     }, this)
 
     put = servicewrapper((params: any, id: any) => {
-        return this.instance.put(`api/problem/${id}`, params, AuthorizationHeader()).then((res) => res.data);
+        return this.instance.put(`api/problem/${id ? `${id}/` : ''}`, params, AuthorizationHeader()).then((res) => res.data);
+    }, this)
+
+    putImage = servicewrapper((params:any, id: any) => {
+        return this.instance.put(`api/problem/image/${id ? `${id}/` : ''}`, params, AuthorizationHeader()).then((res) => res.data);
     }, this)
 }

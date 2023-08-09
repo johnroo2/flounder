@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from base.models import Problem
-from .serializers import ProblemSerializer
+from .serializers import ProblemSerializer, ProblemImageSerializer
 from . import utils
 
 decoder = utils.JWTDecoder()
@@ -41,3 +41,17 @@ def data_detail(request, pk):
     elif request.method == "DELETE":
         focus.delete()
         return Response({'message': 'Problem was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+    
+@api_view(['PUT'])
+def data_detail_image(request, pk):
+    #decoder.checkAuthorization(request)
+    try:
+        focus = Problem.objects.get(pk=pk)
+    except Problem.DoesNotExist:
+        return Response({'message': 'Problem not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    problem_serializer = ProblemImageSerializer(focus, data=request.data)
+    if problem_serializer.is_valid():
+        problem_serializer.save()
+        return Response(problem_serializer.data, status=status.HTTP_202_ACCEPTED)
+    return Response(problem_serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

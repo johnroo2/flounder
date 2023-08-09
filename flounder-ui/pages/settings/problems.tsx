@@ -5,6 +5,7 @@ import dayjs from "dayjs"
 import DeleteProblem from "@/components/modals/DeleteProblem"
 import { PlusOutlined, ReloadOutlined } from "@ant-design/icons"
 import AddProblem from "@/components/modals/AddProblem"
+import useCurrentUser from "@/hooks/useCurrentUser"
 
 const {Text, Title, Paragraph} = Typography
 
@@ -14,6 +15,8 @@ export default function Problems(){
     const [focusProblem, setFocusProblem] = useState<any>(null);
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
     const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
+
+    const {currentUser:currentUser} = useCurrentUser();
 
     const fetch = async() => {
         setLoading(true);
@@ -196,7 +199,8 @@ export default function Problems(){
             <AddProblem
             open={addModalOpen}
             close={() => {setAddModalOpen(false)}}
-            refreshData={fetch}/>
+            refreshData={fetch}
+            currentUser={currentUser}/>
         </Row>
     )
 }

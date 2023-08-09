@@ -14,7 +14,7 @@ export class PointUpdateService {
     }
 
     get = servicewrapper((params: any, id:any) => {
-        return this.instance.get(`api/pointupdate/${id ? id : ''}`, AuthorizationHeader()).then((res) => res.data);
+        return this.instance.get(`api/pointupdate/${id ? `${id}/` : ''}`, AuthorizationHeader()).then((res) => res.data);
     }, this)
 
     post = servicewrapper((params: any) => {
@@ -22,10 +22,10 @@ export class PointUpdateService {
     }, this)
 
     delete = servicewrapper((id: any) => {
-        return this.instance.delete(`api/pointupdate/${id}`, AuthorizationHeader()).then((res) => res.data);
+        return this.instance.delete(`api/pointupdate/${id ? `${id}/` : ''}`, AuthorizationHeader()).then((res) => res.data);
     }, this)
 
     put = servicewrapper((params: any, id: any) => {
-        return this.instance.put(`api/pointupdate/${id}`, params, AuthorizationHeader()).then((res) => res.data);
+        return this.instance.put(`api/pointupdate/${id ? `${id}/` : ''}`, params, AuthorizationHeader()).then((res) => res.data);
     }, this)
 }

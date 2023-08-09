@@ -24,6 +24,7 @@ class User(models.Model):
     def public(self):
         return {
             "username": self.username,
+            "id": self.id,
             "token": self.token,
             "updatedAt": self.updatedAt,
             "isAdmin": self.isAdmin,
@@ -48,13 +49,16 @@ class User(models.Model):
         if username == self.username and password == self.password:
             return self.public()
         return None
+    
+def generate_20_string():
+    return get_random_string(20)
 
 class Problem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.CharField(max_length=10000)
     image = models.ImageField(upload_to='problem_images/', null=True, blank=True)
-    key = models.CharField(default=get_random_string(20), unique=True)
-    options = ArrayField(models.CharField(max_length=150), size=6, default=list)
+    key = models.CharField(default=generate_20_string, unique=True)
+    options = ArrayField(models.CharField(max_length=500), size=6, default=list)
     answer = models.IntegerField()
     solution = models.CharField(max_length=10000, blank=True)
     value = models.IntegerField()

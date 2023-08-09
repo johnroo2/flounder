@@ -19,6 +19,11 @@ class ProblemSerializer(serializers.ModelSerializer):
         model = Problem
         fields = '__all__'
 
+class ProblemImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Problem
+        fields = ('image',)
+
 class PointUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = PointUpdate
