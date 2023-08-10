@@ -1,12 +1,18 @@
-import { Button, Row, Col, Typography, Card, List, Segmented } from 'antd';
+import { Button, Row, Col, Typography, Card, List, Segmented, Select } from 'antd';
 import useCurrentUser from '@/hooks/useCurrentUser';
 import Link from 'next/link';
 import PointsChart from '@/components/chart/PointsChart';
+import { useState } from 'react';
 
 const { Title } = Typography;
 
+export type Mode = "Last 24 Hours" | "Last Week" | "Last 28 Days" | "Last 90 Days" | "Last Year" | "All Time"
+export const modeOptions = ["Last 24 Hours", "Last Week", "Last 28 Days", "Last 90 Days", "Last Year", "All Time"]
+
 export default function Index() {
   const { currentUser: currentUser } = useCurrentUser();
+  const [points, setPoints] = useState<number> (-1)
+  const [mode, setMode] = useState<Mode>("Last 28 Days")
 
   return (
     <>
@@ -43,7 +49,6 @@ export default function Index() {
         <Row className="base-fullheight base-flexhorizontal pt-4">
           <Col span={20}>
             <Card
-              className="h-[calc(100vh_-_64px_-_2rem)] overflow-y-scroll"
               title={
                 <Row>
                   <Title level={3} className="pt-4">
@@ -90,13 +95,26 @@ export default function Index() {
                   </List.Item>}>           
                   </List>                 
                 </Col>
-                <Col span={10} offset={1} className="flex flex-col gap-4">
+                <Col span={10} offset={1} className="flex flex-col gap-4 w-full">
                   <Row className="flex flex-row gap-10 items-center justify-between">
                     <Title level={4}>
-                      Your Points
+                      Your Points <br/>
+                      <span className="text-[0.7em]">
+                        {points >= 0 ? `Total Points: ${points}` : "Fetching Points..."}
+                      </span>
                     </Title>
+                    <Select
+                    value={mode}
+                    className="min-w-[12em]"
+                    onSelect={(value:Mode) => {setMode(value)}}
+                    onClear={() => {setMode("Last 28 Days")}}>
+                      {modeOptions.map((item:string, key:number)=>
+                      <Select.Option value={item} key={key}>
+                        {item}
+                      </Select.Option>)}
+                    </Select>
                   </Row>
-                  <PointsChart currentUser={currentUser}/>
+                  <PointsChart userData={currentUser} setPoints={setPoints} mode={mode}/>
                 </Col>
               </Row>
             </Card>

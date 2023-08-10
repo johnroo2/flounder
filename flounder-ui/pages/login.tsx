@@ -53,18 +53,6 @@ export default function Login(){
                                 required:true,
                                 message:"Please fill out this field."
                             },
-                            // { validator: (rule:any, value:any) => {
-                            // const pattern = /^[^/]*$/;
-                            // if(value && !pattern.test(value)){
-                            //     alert('Character "/" is not allowed! (this is temporary)')
-                            //     Promise.reject();
-                            // }
-                            // else{
-                                
-                            //     Promise.resolve();
-                            // }
-                    
-                            // }}
                         ]}>
                             <Input/>
                         </Form.Item>
@@ -81,7 +69,7 @@ export default function Login(){
                             Login
                         </Button>
                         <p className="mt-4">
-                            Don't have an account? Sign up <Link className="text-sky-600" href={"/signup"}>here</Link>!
+                            Don&apos;t have an account? Sign up <Link className="text-sky-600" href={"/signup"}>here</Link>!
                         </p>
                     </Form>
                 </Card>

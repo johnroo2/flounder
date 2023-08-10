@@ -20,6 +20,8 @@ export default function AddProblem({open, close, refreshData, currentUser}:props
     const [image, setImage] = useState<any>(null);
     const [imageData, setImageData] = useState<FormData | null>(null);
 
+    console.log(image)
+
     useEffect(() => {
         return(() => {
             setImage(null)
@@ -29,15 +31,32 @@ export default function AddProblem({open, close, refreshData, currentUser}:props
         })
     }, [form, open])
 
+    const handleImageChange = async(image:string) => {
+        try{
+            const byteCharacters = atob(image.split(',')[1]);
+            const byteArrays = [];
+            for (let i = 0; i < byteCharacters.length; i++) {
+            byteArrays.push(byteCharacters.charCodeAt(i));
+            }
+            const blob = new Blob([new Uint8Array(byteArrays)], { type: 'image/jpeg' });
+            console.log(blob);
+            setImage(image);
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+
     const handleImage = (formData:FormData) => {
         setImageData(formData);
         ((image:File) => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 const imageDataUrl = reader.result as string;
-                setImage(imageDataUrl);
+                handleImageChange(imageDataUrl);
+            };
             reader.readAsDataURL(image);
-        }})(formData.get('image') as File)
+        })(formData.get('image') as File)
     }
 
     const submit = async(formvalues:any) => {
@@ -104,6 +123,17 @@ export default function AddProblem({open, close, refreshData, currentUser}:props
             <Col span={24}>
                 <Form onFinish={submit} form={form} layout="vertical">
                     <Row gutter={[16,8]}>
+                        <Col span={24}>
+                            <Form.Item label="Title" name="title" 
+                                rules={[
+                                    {
+                                        required:true,
+                                        message:"Please fill out this field."
+                                    }
+                                ]}>
+                                    <Input maxLength={100} showCount/>
+                            </Form.Item>
+                        </Col>
                         <Col span={12}>
                             <Form.Item label="Question" name="question" 
                                 rules={[
@@ -211,7 +241,8 @@ export default function AddProblem({open, close, refreshData, currentUser}:props
                                     />
                             </Form.Item>
                             {image && <Image
-                            className="max-h-[8rem]"
+                            className="rounded-md max-h-[8rem]"
+                            alt="Upload"
                             src={image}/>}
                         </Col>
                         <Col span={12}>

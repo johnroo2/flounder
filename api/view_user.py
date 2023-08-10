@@ -52,6 +52,7 @@ def data_detail_points(request, username):
             pointupdates = PointUpdate.objects.filter(user=find.id)
             sum = 0
             updates = []
+            updates.append({'id':-1, 'value':0, 'date':find.createdAt})
             if pointupdates:
                 for update in pointupdates:
                     problems = Problem.objects.filter(id=update.problem.id)

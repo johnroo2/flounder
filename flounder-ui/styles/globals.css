@@ -3,18 +3,22 @@
 @tailwind utilities;
 
 .base-fullheight{
-    height: calc(100vh - 64px)
+    height: calc(100vh - 64px);
 }
 
 .base-flexcenter{
     display:flex;
     align-items:center;
     justify-content: center;
+    max-height: calc(100vh - 64px - 1rem);
+    overflow-y: scroll;
 }
 
 .base-flexhorizontal{
     display:flex;
     justify-content: center;
+    max-height: calc(100vh - 64px - 1rem);
+    overflow-y: scroll;
 }
 
 .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item:hover,
@@ -115,4 +119,15 @@
     --tw-shadow: 0 4px 6px -1px rgba(50, 150, 255, 0.75), 0 2px 4px -2px rgba(50, 150, 255, 0.75);
     --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 var(--tw-shadow-color)), var(--tw-ring-shadow, 0 0 var(--tw-shadow-color)), var(--tw-shadow);
+}
+
+.width-lockfull{
+    box-sizing:unset !important;
+    min-width: 30vw !important;
+    max-width: 100% !important;
+    height:auto !important
+}
+
+.discordsvg{
+    color:black;
 }

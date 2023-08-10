@@ -29,6 +29,7 @@ class User(models.Model):
             "updatedAt": self.updatedAt,
             "isAdmin": self.isAdmin,
             "isMod": self.isMod,
+            "createdAt": self.createdAt,
         }
 
     def profile(self, username):
@@ -37,7 +38,6 @@ class User(models.Model):
                 "username": self.username,
                 "firstname": self.firstname,
                 "lastname": self.lastname,
-                "email": self.email,
                 "about": self.about,
                 "isAdmin": self.isAdmin,
                 "isMod": self.isMod,
@@ -55,8 +55,8 @@ def generate_20_string():
 
 class Problem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    attempts = models.ManyToManyField(User, related_name='attempteds')
-    solvers = models.ManyToManyField(User, related_name='solveds')
+    attempts = models.ManyToManyField(User, related_name='attempteds', blank=True)
+    solvers = models.ManyToManyField(User, related_name='solveds', blank=True)
     title = models.CharField(max_length=100)
     question = models.CharField(max_length=10000)
     image = models.ImageField(upload_to='problem_images/', null=True, blank=True)
@@ -69,14 +69,6 @@ class Problem(models.Model):
     updatedAt = models.DateTimeField(auto_now=True)
 
     def public(self, userquery=None):
-        temp_attempts = self.attempts.all()
-        fresh = False
-        for user in temp_attempts:
-            if not user: break
-            else:
-                if(user.username == userquery):
-                    fresh = True
-
         return {
             "creator":self.user.username,
             "title":self.title,
@@ -86,7 +78,8 @@ class Problem(models.Model):
             "value": self.value,
             "solvers":self.solvers.count(),
             "attempts":self.attempts.count(),
-            "fresh":fresh,
+            "fresh":userquery not in self.attempts.all(),
+            "selfsolved":userquery in self.solvers.all(),
             "createdAt": self.createdAt,
         }
 

@@ -36,6 +36,7 @@ export default function Problem(){
             try{
                 const info = await get(key, currentUser.username)
                 if(info.pass){
+                    console.log(info.output)
                     setProblemData(info.output)
                 }
                 else{
@@ -107,19 +108,21 @@ export default function Problem(){
                         </>
                     }
                     ref={containerRef}
-                    className={`h-[calc(100vh_-_64px_-_2rem)] overflow-y-scroll`}>
+                    >
                         <Spin size="large" spinning={loading}>
                             {!notFound && problemData &&
                                 <Col span={24}>
                                     <Row className="flex flex-col gap-4">
                                         <Text className="text-xl font-semibold">
-                                            Problem
+                                            Problem <br/>
                                         </Text>
                                         <Text className="text-lg">
                                             {problemData.question}
                                         </Text>
                                         {problemData.image &&
                                         <Image
+                                        className="rounded-md"
+                                        alt="Problem Image"
                                         width="30%"
                                         src={`data:image/png;base64,${problemData.image}`}>
 
@@ -164,7 +167,9 @@ export default function Problem(){
                                             <Text className="text-xl font-semibold flex flex-row gap-2 items-center">
                                                 Available Points: {availablePoints}
                                                 <Tooltip color="#0369a1" 
-                                                title={!availablePoints ? "You've already attempted this problem!" : 
+                                                title={!availablePoints ? `${problemData.selfsolved ? 
+                                                    "You've already solved and earned points from this question!" : 
+                                                    "You've already attempted this question!"}` : 
                                                 `There are ${availablePoints} to be claimed if you get it right!`}> 
                                                     <InfoCircleTwoTone/>
                                                 </Tooltip>

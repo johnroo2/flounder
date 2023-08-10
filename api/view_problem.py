@@ -2,8 +2,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from base.models import Problem, User
-from rest_framework.exceptions import NotFound
-from .serializers import ProblemSerializer, ProblemImageSerializer
+from rest_framework.exceptions import NotFound, APIException
+from .serializers import ProblemSerializer, ProblemImageSerializer, PointUpdateSerializer
 from . import utils
 
 decoder = utils.JWTDecoder()
@@ -60,9 +60,23 @@ def data_detail_key(request, key):
             user = User.objects.get(username=request.data['user'])
             for find in found:
                 if find.verify(request.data['answer']):
-                    if user not in find.attempts.all():
+                    if user not in find.attempts.all(): #if user has NOT tried it yet
+                        find.attempts.add(user) 
                         find.solvers.add(user)
-                    return Response({'pass': 'correct', 'answer': find.options[find.answer], 'solution': find.solution})
+                        
+                        pointupdate_serializer = PointUpdateSerializer(data = 
+                        {
+                            "user":user.id,
+                            "problem":find.id
+                        })
+                        if pointupdate_serializer.is_valid():
+                            pointupdate_serializer.save()
+                            return Response({'pass': 'correct', 'answer': find.options[find.answer], 'solution': find.solution})
+                        else:
+                            raise APIException("Could not update points")
+                    else:
+                        find.attempts.add(user) 
+                        return Response({'pass': 'correct', 'answer': find.options[find.answer], 'solution': find.solution})
                 find.attempts.add(user) 
             return Response({'pass': 'incorrect', 'answer': find.options[find.answer], 'solution': find.solution})
         else:
@@ -75,8 +89,9 @@ def data_detail_key_user(request, key, user):
     if found:
         for find in found:
             userquery = User.objects.all().filter(username=user)
-            problem = find.public(userquery)
-            return Response(problem)
+            for user in userquery:
+                problem = find.public(user)
+                return Response(problem)
     else:
         raise NotFound("Problem not found.")
         
