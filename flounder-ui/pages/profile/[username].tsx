@@ -24,8 +24,8 @@ export default function Profile(){
     useEffect(() => {fetch()}, [username])
 
     const fetch = async() => {
-        setLoading(true);
         if(typeof username === "string"){
+            setLoading(true);
             try{
                 const info = await get(username)
 
@@ -62,11 +62,13 @@ export default function Profile(){
                             <Title level={3} className="mt-4">
                                 {`${userData.username}'s Profile`}
                                 <Tooltip
+                                color="#0369a1" 
                                 placement="top"
                                 title="Admin">
                                     {userData.isAdmin ? " 😎": ""}
                                 </Tooltip>
                                 <Tooltip
+                                color="#0369a1" 
                                 placement="top"
                                 title="Moderator">
                                     {userData.isMod ? " 🛡️" : ""}

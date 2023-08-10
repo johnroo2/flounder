@@ -43,7 +43,6 @@ class ImageToBase64():
     def convertImage(self, image_path):
         try:
             script_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-            print(script_dir + image_path)
             image = Image.open(script_dir + image_path)
 
             image_bytes = BytesIO()

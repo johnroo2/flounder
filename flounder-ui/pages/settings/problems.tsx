@@ -6,6 +6,7 @@ import DeleteProblem from "@/components/modals/DeleteProblem"
 import { PlusOutlined, ReloadOutlined } from "@ant-design/icons"
 import AddProblem from "@/components/modals/AddProblem"
 import useCurrentUser from "@/hooks/useCurrentUser"
+import Link from "next/link"
 
 const {Text, Title, Paragraph} = Typography
 
@@ -91,7 +92,10 @@ export default function Problems(){
             width: 150,
             align: "center",
             render: ((text:string, item:any) => {
-                return <Text>{item.key}</Text>
+                return <Link href={`/problems/${item.key}`}>
+                    <Text className="hover:text-blue-500 trnasition-all duration-300">
+                        {item.key}
+                    </Text></Link>
             })
         },
         {

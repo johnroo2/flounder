@@ -14,11 +14,10 @@ export class ProfileService{
     }
 
     get = async(username:string) => {
-        return this.instance.get(`api/profile/${username}/`, AuthorizationHeader()).then((res) => res.data)
+        return this.instance.get(`api/user/profile/${username}/`, AuthorizationHeader()).then((res) => res.data)
     }
 
     put = servicewrapper(async(username:string, params:any) => {
-        console.log(params)
-        return this.instance.put(`api/profile/${username}/`, params, AuthorizationHeader()).then((res) => res.data)
+        return this.instance.put(`api/user/profile/${username}/`, params, AuthorizationHeader()).then((res) => res.data)
     }, this)
 }

@@ -124,6 +124,7 @@ export default function AddProblem({open, close, refreshData, currentUser}:props
                             <Form.Item 
                                 label={
                                 <Tooltip 
+                                color="#0369a1" 
                                 title={`Include up to 6 options seperated by \"/\"`} 
                                 placement="top">
                                     <Row className="flex flex-row gap-2 items-center">
@@ -147,6 +148,7 @@ export default function AddProblem({open, close, refreshData, currentUser}:props
                             <Form.Item 
                                 label={
                                 <Tooltip 
+                                color="#0369a1" 
                                 title={`Select an index from 0-5 inclusive`} 
                                 placement="top">
                                     <Row className="flex flex-row gap-2 items-center">
@@ -183,6 +185,7 @@ export default function AddProblem({open, close, refreshData, currentUser}:props
                             <Form.Item
                             label={
                                 <Tooltip 
+                                color="#0369a1" 
                                 title={`Supported image types: ".png, .jpg, .jpeg, .gif", Max Upload is 5MB.`} 
                                 placement="top">
                                     <Row className="flex flex-row gap-2 items-center">

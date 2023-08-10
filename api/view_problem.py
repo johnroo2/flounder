@@ -1,7 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-from base.models import Problem
+from base.models import Problem, User
+from rest_framework.exceptions import NotFound
 from .serializers import ProblemSerializer, ProblemImageSerializer
 from . import utils
 
@@ -41,6 +42,44 @@ def data_detail(request, pk):
     elif request.method == "DELETE":
         focus.delete()
         return Response({'message': 'Problem was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+    
+@api_view(['GET','POST'])
+def data_detail_key(request, key):
+    #decoder.checkAuthorization(request)
+    if request.method == "GET":
+        found = Problem.objects.filter(key=key)
+        if found:
+            for find in found:
+                problem = find.public()
+                return Response(problem)
+        else:
+            raise NotFound("Problem not found.")
+    elif request.method == "POST":
+        found = Problem.objects.filter(key=key)
+        if found and request.data['user']:
+            user = User.objects.get(username=request.data['user'])
+            for find in found:
+                if find.verify(request.data['answer']):
+                    if user not in find.attempts.all():
+                        find.solvers.add(user)
+                    return Response({'pass': 'correct', 'answer': find.options[find.answer], 'solution': find.solution})
+                find.attempts.add(user) 
+            return Response({'pass': 'incorrect', 'answer': find.options[find.answer], 'solution': find.solution})
+        else:
+            raise NotFound("Problem not found.")
+        
+@api_view(['GET'])
+def data_detail_key_user(request, key, user):
+    #decoder.checkAuthorization(request)
+    found = Problem.objects.filter(key=key)
+    if found:
+        for find in found:
+            userquery = User.objects.all().filter(username=user)
+            problem = find.public(userquery)
+            return Response(problem)
+    else:
+        raise NotFound("Problem not found.")
+        
     
 @api_view(['PUT'])
 def data_detail_image(request, pk):

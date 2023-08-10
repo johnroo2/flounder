@@ -17,7 +17,7 @@ class User(models.Model):
     isAdmin = models.BooleanField(default=False)
     isMod = models.BooleanField(default=False)
     image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
-    token = models.CharField(max_length=1000, null=True, blank=True)
+    token = models.CharField(max_length=1000, blank=True)
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
 
@@ -55,6 +55,9 @@ def generate_20_string():
 
 class Problem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    attempts = models.ManyToManyField(User, related_name='attempteds')
+    solvers = models.ManyToManyField(User, related_name='solveds')
+    title = models.CharField(max_length=100)
     question = models.CharField(max_length=10000)
     image = models.ImageField(upload_to='problem_images/', null=True, blank=True)
     key = models.CharField(default=generate_20_string, unique=True)
@@ -64,6 +67,31 @@ class Problem(models.Model):
     value = models.IntegerField()
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
+
+    def public(self, userquery=None):
+        temp_attempts = self.attempts.all()
+        fresh = False
+        for user in temp_attempts:
+            if not user: break
+            else:
+                if(user.username == userquery):
+                    fresh = True
+
+        return {
+            "creator":self.user.username,
+            "title":self.title,
+            "question":self.question,
+            "image": imageHandler.convertImage(self.image.url) if self.image else None,
+            "options": self.options,
+            "value": self.value,
+            "solvers":self.solvers.count(),
+            "attempts":self.attempts.count(),
+            "fresh":fresh,
+            "createdAt": self.createdAt,
+        }
+
+    def verify(self, answer):
+        return answer == self.answer
 
 class PointUpdate(models.Model):
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)

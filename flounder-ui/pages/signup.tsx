@@ -12,7 +12,6 @@ export default function Signup(){
     const {signup: signup} = useSignup();
 
     const handleSubmit = async(formvalues:any) => {
-        console.log("EHLLOOO");
         const info = await signup(formvalues);
         if(info.pass){
             router.push(info.output?.username ? `/profile/${info.output.username}` : "/");

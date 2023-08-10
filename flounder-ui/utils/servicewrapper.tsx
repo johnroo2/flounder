@@ -12,7 +12,7 @@ export default function servicewrapper(method:(...args:any[]) => Promise<any>, c
         }
         catch(err){
             console.log(err)
-            return err;
+            throw err;
         }
     }
 }

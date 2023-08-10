@@ -120,12 +120,12 @@ const Navbar = () => {
                         checkedChildren="On" unCheckedChildren="Off" />
                     </Row>
                     {currentUser && (currentUser.isAdmin || currentUser.isMod) &&
-                    <Tooltip title="Admin Settings" placement="bottom">
+                    <Tooltip color="#0369a1" title="Admin Settings" placement="bottom">
                     <Link href={'/settings'}>
                         <SettingOutlined className="text-white text-[1.75em]"/>
                     </Link>
                     </Tooltip>}
-                    <Tooltip title="User" placement="bottom">
+                    <Tooltip color="#0369a1" title="User" placement="bottom">
                         <Dropdown menu={{ items }} trigger={["click"]}>
                             <UserOutlined className="text-white text-[1.75em]"/>
                         </Dropdown>
