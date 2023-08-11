@@ -40,6 +40,13 @@ export default function Index() {
                 >
                   Sign Up
                 </Button>
+                <Button
+                  type="primary"
+                  className="bg-sky-600 hover:bg-sky-400 min-w-[200px]"
+                  href="/about"
+                >
+                  About
+                </Button>
               </Col>
             </Card>
           </Col>

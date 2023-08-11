@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from base.models import User, Problem, PointUpdate
+from base.models import User, Problem, PointUpdate, ProblemVote
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,4 +27,9 @@ class ProblemImageSerializer(serializers.ModelSerializer):
 class PointUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = PointUpdate
+        fields = '__all__'
+
+class ProblemVoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProblemVote
         fields = '__all__'

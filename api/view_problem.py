@@ -13,6 +13,9 @@ def data_list(request):
     #decoder.checkAuthorization(request)
     if request.method == 'GET':
         problems = Problem.objects.all()
+        for problem in problems:
+            problem.updatevote_status()
+
         if request.GET.get('sortBy', False) and request.GET.get('sortDirection', False):
             prefix = ""
             if request.GET.get('sortDirection', 'asc') == "desc":
@@ -57,6 +60,7 @@ def data_detail_key(request, key):
         found = Problem.objects.filter(key=key)
         if found:
             for find in found:
+                find.updatevote_status()
                 problem = find.public()
                 return Response(problem)
         else:

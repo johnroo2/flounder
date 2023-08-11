@@ -1,11 +1,15 @@
 import servicewrapper from '@/utils/servicewrapper';
 import axios, { AxiosInstance} from 'axios';
+//import https from 'https'
 
 export class AuthService{
     protected readonly instance:AxiosInstance;
 
     constructor(url:string){
         this.instance = axios.create({
+            // httpsAgent: new https.Agent({  
+            //     rejectUnauthorized: false
+            //   }),
             baseURL: url,
             timeout: 30000,
             timeoutErrorMessage: "Time out!"

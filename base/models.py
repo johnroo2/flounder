@@ -86,9 +86,31 @@ class Problem(models.Model):
     options = ArrayField(models.CharField(max_length=500), size=6, default=list)
     answer = models.IntegerField()
     solution = models.CharField(max_length=10000, blank=True)
+    likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
+    vote_history = ArrayField(models.CharField(max_length=300), default=list)
     value = models.IntegerField()
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
+
+    def updatevote_status(self):
+        problemvotes = ProblemVote.objects.filter(problem=self.id)
+        likesum = 0
+        dislikesum = 0
+        updates = []
+        updates.append(json.dumps({'id':-1, 'value':0, 'date':self.createdAt.isoformat()}))
+        if problemvotes:
+            for update in problemvotes:
+                if update.status > 0:
+                    likesum += 1
+                else:
+                    dislikesum += 1
+                datestring = update.createdAt.isoformat()
+                updates.append(json.dumps({'id':update.id, 'value':update.status, 'date':datestring}))
+        self.likes = likesum
+        self.dislikes = dislikesum
+        self.history = updates
+        self.save()
 
     def public(self, userquery=None):
         return {
@@ -102,6 +124,9 @@ class Problem(models.Model):
             "attempts":self.attempts.count(),
             "fresh":userquery not in self.attempts.all() if userquery else None,
             "selfsolved":userquery in self.solvers.all() if userquery else None,
+            "likes":self.likes,
+            "dislikes":self.dislikes,
+            "vote_history": self.vote_history,
             "createdAt": self.createdAt,
         }
 
@@ -111,6 +136,16 @@ class Problem(models.Model):
 class PointUpdate(models.Model):
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ['problem', 'user']
+
+class ProblemVote(models.Model):
+    problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.IntegerField()
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
 
