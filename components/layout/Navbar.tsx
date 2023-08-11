@@ -4,7 +4,7 @@ import { UserOutlined, SettingOutlined } from "@ant-design/icons";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import Link from "next/link";
 import { useState } from "react";
-import { PolyWave } from "./wave/Waves";
+import { PolyWave } from "./Waves";
 import router from "next/router";
 
 const {Title, Text} = Typography
@@ -72,7 +72,7 @@ const Navbar = () => {
             <Col>
                 <Row className="flex flex-row gap-12 items-center">
                     <Title level={3} className="items-center justify-center mt-2">
-                        <Link href="/">
+                        <Link href={currentUser ? "/dashboard" : "/"}>
                             <span className="text-white hover:text-white">
                                 🐟 Flounder
                             </span>
@@ -81,8 +81,8 @@ const Navbar = () => {
                     <Row className="flex flex-row gap-8 items-center">
                         {currentUser && 
                          <Link
-                         href={`/`}>
-                             <Text
+                         href={currentUser ? "dashboard" : `/`}>
+                             <Text 
                              className="text-white">
                                  Dashboard
                              </Text>
