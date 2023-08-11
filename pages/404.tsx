@@ -1,5 +1,4 @@
 import {Row, Col, Button, Typography, Card, Empty} from 'antd'
-import { GetStaticProps } from 'next'
 import router from 'next/router'
 
 const {Title} = Typography
