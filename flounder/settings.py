@@ -59,7 +59,7 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:8000',
     'http://localhost:3000',
     'http://localhost:3001',
-    'https://flounder-app.vercel.app'
+    'https://flounder-alpha.vercel.app'
 )
 CORS_ALLOW_CREDENTIALS = True
 

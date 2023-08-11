@@ -17,7 +17,7 @@ export default function Index() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!currentUser) {
+    if (!currentUser || !currentUser.username) {
       router.replace('/');
     }
   }, [currentUser, router]);
