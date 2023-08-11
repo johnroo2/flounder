@@ -100,8 +100,8 @@ class Problem(models.Model):
             "value": self.value,
             "solvers":self.solvers.count(),
             "attempts":self.attempts.count(),
-            "fresh":userquery not in self.attempts.all(),
-            "selfsolved":userquery in self.solvers.all(),
+            "fresh":userquery not in self.attempts.all() if userquery else None,
+            "selfsolved":userquery in self.solvers.all() if userquery else None,
             "createdAt": self.createdAt,
         }
 

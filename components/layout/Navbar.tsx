@@ -5,6 +5,7 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import Link from "next/link";
 import { useState } from "react";
 import { PolyWave } from "./wave/Waves";
+import router from "next/router";
 
 const {Title, Text} = Typography
 
@@ -16,42 +17,51 @@ const Navbar = () => {
 
     const items: MenuProps['items'] = [
         {
-          key: '0',
-          label: (
-            <>
-            {currentUser ? 
-                <Col className="flex flex-col p-2 bg-white/[0.5] gap-4">
-                    <Text className="text-center">
-                        {currentUser.username}
-                    </Text>
-                    <Button
-                    type="primary"
-                    className="bg-sky-600"
-                    href={`/profile/${currentUser.username}`}>
-                        Profile
-                    </Button>
-                    <Button
-                    type="primary"
-                    danger
-                    onClick={logout}>
-                        Logout
-                    </Button>
-                </Col>
-            :
-                <Col className="flex flex-col p-2 bg-white/[0.5] gap-4">
-                    <Text>
-                        You are not signed in!
-                    </Text>
-                    <Button
-                    type="primary"
-                    href="/login"
-                    className="bg-sky-600">
-                        Login
-                    </Button>
-                </Col>
-            }
-            </>
-          )
+            key: '0',
+            label: (
+                <div className="navbar-menu">
+                <Text onClick={() => {router.push(`/profile/${currentUser.username}`)}} className="text-black hover:text-600">
+                    Profile
+                </Text>
+                </div>
+            )
+        },
+        currentUser && (currentUser.isAdmin || currentUser.isMod) && {
+            key: '2',
+            type: "group",
+            label: 'Admin',
+            children: [
+                {
+                    key: '2-1',
+                    label: (
+                        <div className="navbar-menu">
+                        <Text onClick={() => {router.push('/settings/users')}} className="text-black hover:text-600">
+                            {">"} Users
+                        </Text>
+                        </div>
+                    )
+                },
+                {
+                    key: '2-2',
+                    label: (
+                        <div className="navbar-menu">
+                        <Text onClick={() => {router.push('/settings/problems')}} className="text-black hover:text-600">
+                            {">"} Problems
+                        </Text>
+                        </div>
+                    )
+                },
+            ],
+        },
+        {
+            key: '1',
+            label: (
+                <div className="navbar-menu">
+                <Text onClick={logout} className="text-black hover:text-600">
+                    Logout
+                </Text>
+                </div>
+            )
         },
     ];
 
@@ -112,7 +122,7 @@ const Navbar = () => {
             
 
             <Col className="mr-4">
-                <Row className="flex flex-row gap-8">
+                <Row className="flex flex-row gap-8 items-center">
                     <Row className="flex flex-row gap-2">
                         <span className="text-white">Waves:</span>
                         <Switch defaultChecked={true} onChange={(value:any)=>{setWaveState(value)}} 
@@ -120,16 +130,26 @@ const Navbar = () => {
                         checkedChildren="On" unCheckedChildren="Off" />
                     </Row>
                     {currentUser && (currentUser.isAdmin || currentUser.isMod) &&
-                    <Tooltip color="#0369a1" title="Admin Settings" placement="bottom">
+                    <Tooltip color="#0369a1" title="Admin" placement="bottom">
                     <Link href={'/settings'}>
                         <SettingOutlined className="text-white text-[1.75em]"/>
                     </Link>
                     </Tooltip>}
-                    <Tooltip color="#0369a1" title="User" placement="bottom">
-                        <Dropdown menu={{ items }} trigger={["click"]}>
-                            <UserOutlined className="text-white text-[1.75em]"/>
-                        </Dropdown>
-                    </Tooltip>
+                        {currentUser ?                   
+                        <Dropdown menu={{ items }} trigger={["click"]} placement="bottomRight">
+                            <div className="flex flex-row gap-3 bg-sky-500 items-center justify-center text-white rounded-full p-2">
+                                <UserOutlined className="text-white text-[1.5em]"/> 
+                                {currentUser.username}
+                            </div>
+                        </Dropdown>                     
+                        : 
+                        <Button
+                        type="primary"
+                        href="/login"
+                        className="bg-sky-500">
+                            Login
+                        </Button>
+                        }
                 </Row>
             </Col>
         </div>

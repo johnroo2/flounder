@@ -59,6 +59,59 @@ export default function Problems(){
         }
     }
 
+    const handlePaginationChange = async(
+        pagination:any,
+        filters:any,
+        sorter:any,
+        extra:any
+    ) => {
+        const {action} = extra;
+
+        if (action === 'sort') {
+            const params = {
+                sortBy: sorter.columnKey ? sorter.columnKey : 'id',
+                sortDirection: sorter.order === 'ascend' ? 'asc' : 'desc',
+            };
+            setLoading(true);
+            try{
+                const response = await (async(userlessList:Array<any>) => {
+                    const clone = [...userlessList]
+                    const memo = new Map()
+                    for(const problem of userlessList){
+                        try{
+                            let userresponse:any;
+                            if(memo.has(problem.user)){
+                                userresponse = memo.get(problem.user)
+                            }
+                            else{
+                                userresponse = await userService.get({}, problem.user)
+                                if(userresponse){
+                                    memo.set(problem.user, {...userresponse})
+                                }
+                            }
+                            clone.forEach((item:any) => {
+                                if(item.user === problem.user && userresponse){
+                                    item.creator = userresponse?.username;
+                                }
+                            })
+                        }
+                        catch(err){
+                            console.log(err)
+                            continue;
+                        }
+                    }
+                    return clone;
+                })(await problemService.get(params))
+                setProblemList([...response])
+                setLoading(false)
+            }
+            catch(err){
+                console.log(err)
+                setLoading(false)
+            }
+        }
+    }
+
     useEffect(() => {fetch()}, [])
 
     const columns:Array<any> = [
@@ -68,6 +121,7 @@ export default function Problems(){
             key: "createdAt",
             width: 150,
             sorter: true,
+            defaultSortOrder: "ascend",
             align: "center",
             render: ((text:string, item:any) => {
                 const formattedDate = dayjs(item.createdAt).format('YYYY-MM-DD HH:mm:ss');
@@ -81,6 +135,7 @@ export default function Problems(){
             width: 150,
             align: "center",
             sorter:true,
+            defaultSortOrder: "ascend",
             render: ((text:string, item:any) => {
                 return <Text>{item.creator}</Text>
             })
@@ -92,7 +147,7 @@ export default function Problems(){
             width: 150,
             align: "center",
             render: ((text:string, item:any) => {
-                return <Link href={`/problems/${item.key}`}>
+                return <Link href={`/problems/key/${item.key}`}>
                     <Text className="hover:text-blue-500 trnasition-all duration-300">
                         {item.key}
                     </Text></Link>
@@ -104,6 +159,7 @@ export default function Problems(){
             key: "value",
             width: 100,
             sorter:true,
+            defaultSortOrder: "descend",
             align: "center",
             render: ((text:string, item:any) => {
                 return <Text>{item.value}</Text>
@@ -147,6 +203,7 @@ export default function Problems(){
             dataIndex: "image",
             width: 75,
             sorter:true,
+            defaultSortOrder: "descend",
             align: "center",
             render: ((text:string, item:any) => {
                 return <Text>{item.image ? "Y" : "N"}</Text>
@@ -208,6 +265,7 @@ export default function Problems(){
                     pagination={{
                         pageSize:5
                     }}
+                    onChange={handlePaginationChange}
                     loading={loading}
                     columns={columns}
                     dataSource={problemList}>

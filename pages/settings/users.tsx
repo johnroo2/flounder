@@ -16,7 +16,7 @@ export default function Users(){
     const fetch = async() => {
         setLoading(true)
         try{
-            const response = await userService.get({})
+            const response = await userService.get()
             setUserList([...response])
             setLoading(false)
         }
@@ -63,6 +63,7 @@ export default function Users(){
             key: "createdAt",
             width: 150,
             sorter: true,
+            defaultSortOrder: "ascend",
             align: "center",
             render: ((text:string, item:any) => {
                 const formattedDate = dayjs(item.createdAt).format('YYYY-MM-DD HH:mm:ss');
@@ -75,6 +76,7 @@ export default function Users(){
             key: "firstname",
             width: 150,
             sorter: true,
+            defaultSortOrder: "ascend",
             align: "center",
             render: ((text:string, item:any) => {
                 return <Text>{item.firstname}{" "}{item.lastname}</Text>
@@ -86,6 +88,7 @@ export default function Users(){
             key: "username",
             width: 150,
             sorter: true,
+            defaultSortOrder: "ascend",
             align: "center",
             render: ((text:string, item:any) => {
                 return <Text>{item.username}</Text>
@@ -97,6 +100,7 @@ export default function Users(){
             key: "email",
             width: 200,
             sorter: true,
+            defaultSortOrder: "ascend",
             align: "center",
             render: ((text:string, item:any) => {
                 return <Text>{item.email}</Text>
@@ -108,6 +112,7 @@ export default function Users(){
             key: "points",
             width: 100,
             sorter: true,
+            defaultSortOrder: "descend",
             align: "center",
             render: ((text:string, item:any) => {
                 return <Text>{item?.points}</Text>
@@ -119,6 +124,7 @@ export default function Users(){
             dataIndex: "isMod",
             width: 75,
             sorter:true,
+            defaultSortOrder: "descend",
             align: "center",
             render: ((text:string, item:any) => {
                 return <Text>{item.isMod ? "Y" : "N"}</Text>
@@ -129,6 +135,7 @@ export default function Users(){
             key: "isAdmin",
             dataIndex: "isAdmin",
             sorter:true,
+            defaultSortOrder: "descend",
             width: 75,
             align: "center",
             render: ((text:string, item:any) => {

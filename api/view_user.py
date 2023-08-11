@@ -19,9 +19,9 @@ def data_list(request):
             prefix = ""
             if request.GET.get('sortDirection', 'asc') == "desc":
                 prefix = "-"
-            users = User.objects.all().order_by(str(prefix) + str(request.GET.get('sortBy', 'pk')))
+            users = users.order_by(str(prefix) + str(request.GET.get('sortBy', 'pk')))
         else:
-            users = User.objects.all().order_by('pk')
+            users = users.order_by('pk')
 
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)

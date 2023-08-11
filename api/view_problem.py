@@ -13,6 +13,13 @@ def data_list(request):
     #decoder.checkAuthorization(request)
     if request.method == 'GET':
         problems = Problem.objects.all()
+        if request.GET.get('sortBy', False) and request.GET.get('sortDirection', False):
+            prefix = ""
+            if request.GET.get('sortDirection', 'asc') == "desc":
+                prefix = "-"
+            problems = problems.order_by(str(prefix) + str(request.GET.get('sortBy', 'pk')))
+        else:
+            problems = problems.order_by('pk')
         serializer = ProblemSerializer(problems, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
@@ -88,9 +95,13 @@ def data_detail_key_user(request, key, user):
     found = Problem.objects.filter(key=key)
     if found:
         for find in found:
-            userquery = User.objects.all().filter(username=user)
-            for user in userquery:
-                problem = find.public(user)
+            if user:
+                userquery = User.objects.all().filter(username=user)
+                for user in userquery:
+                    problem = find.public(user)
+                    return Response(problem)
+            else:
+                problem = find.public()
                 return Response(problem)
     else:
         raise NotFound("Problem not found.")

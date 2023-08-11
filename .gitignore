@@ -1,38 +1,38 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/flounder-ui/node_modules
-/flounder-ui/.pnp
-/flounder-ui/.pnp.js
+node_modules
+.pnp
+.pnp.js
 
 # testing
-/flounder-ui/coverage
+coverage
 
 # next.js
-/flounder-ui/.next/
-/flounder-ui/out/
+.next/
+out/
 
 # production
-/flounder-ui/build
+build
 
 # misc
-/flounder-ui/.DS_Store
-/flounder-ui/*.pem
+.DS_Store
+*.pem
 
 # debug
-/flounder-ui/npm-debug.log*
-/flounder-ui/yarn-debug.log*
-/flounder-ui/yarn-error.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # local env files
-/flounder-ui/.env*.local
+.env*.local
 
 # vercel
-/flounder-ui/.vercel
+.vercel
 
 # typescript
-/flounder-ui/*.tsbuildinfo
-/flounder-ui/next-env.d.ts
+*.tsbuildinfo
+next-env.d.ts
 
 db.sqlite3
 data.json
