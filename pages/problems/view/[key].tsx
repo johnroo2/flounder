@@ -27,7 +27,7 @@ export default function Problem(){
     const fetch = async() => {
         if(typeof key === "string"){
             if(currentUser){
-                router.push(`/problems/solve/${key}`)
+                router.replace(`/problems/solve/${key}`)
             }
             setLoading(true);
             try{

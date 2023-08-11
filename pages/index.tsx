@@ -3,6 +3,7 @@ import useCurrentUser from '@/hooks/useCurrentUser';
 import Link from 'next/link';
 import PointsChart from '@/components/chart/PointsChart';
 import { useState } from 'react';
+import router from 'next/router';
 
 const { Title } = Typography;
 
@@ -13,6 +14,10 @@ export default function Index() {
   const { currentUser: currentUser } = useCurrentUser();
   const [points, setPoints] = useState<number> (-1)
   const [mode, setMode] = useState<Mode>("Last 28 Days")
+
+  if(currentUser){
+    router.replace('/dashboard')
+  }
 
   return (
     <>
