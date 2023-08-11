@@ -4,6 +4,7 @@ import { useRouter } from "next/router"
 const {Title, Text} = Typography
 
 export default function NoPermission(){
+    const router = useRouter();
     return(
         <Modal
         open={true}

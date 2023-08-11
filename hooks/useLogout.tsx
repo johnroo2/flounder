@@ -2,6 +2,7 @@ import cookies from "@/utils/cookies"
 import { useRouter } from "next/router"
 
 export const useLogout = () => {
+    const router = useRouter();
 
     const logout = () => {
         cookies.remove("flounder-webapp-currentUser")
