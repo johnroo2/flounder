@@ -16,10 +16,10 @@ export default function Index() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!currentUser || !currentUser.username) {
+    if (!currentUser) {
       router.replace('/');
     }
-  }, [currentUser, router]);
+  }, []);
 
   return (
     <Row className="base-fullheight base-flexhorizontal pt-4">

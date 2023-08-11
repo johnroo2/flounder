@@ -10,10 +10,10 @@ export default function Index() {
   const router = useRouter();
 
   useEffect(() => {
-    if (currentUser && currentUser.username) {
+    if (currentUser) {
       router.replace('/dashboard');
     }
-  }, [currentUser, router]);
+  }, []);
 
   return (
     <>
