@@ -15,7 +15,7 @@ class User(models.Model):
     lastname = models.CharField(max_length=20)
     email = models.EmailField(unique=True)
     about = models.CharField(max_length=1000, blank=True)
-    points = models.IntegerField()
+    points = models.IntegerField(default=0)
     history = ArrayField(models.CharField(max_length=300), default=list)
     isAdmin = models.BooleanField(default=False)
     isMod = models.BooleanField(default=False)
