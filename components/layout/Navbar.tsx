@@ -5,7 +5,7 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import Link from "next/link";
 import { useState } from "react";
 import { PolyWave } from "./Waves";
-import router from "next/router";
+import { useRouter } from "next/router";
 
 const {Title, Text} = Typography
 
@@ -14,6 +14,7 @@ const Navbar = () => {
     const {logout:logout} = useLogout();
     const {currentUser:currentUser} = useCurrentUser();
     const [waveState, setWaveState] = useState<boolean>(true);
+    const router = useRouter()
 
     const items: MenuProps['items'] = [
         {

@@ -1,5 +1,5 @@
 import {Modal, Divider, Row, Button, Typography} from "antd";
-import router from "next/router"
+import { useRouter } from "next/router"
 
 const {Title, Text} = Typography
 

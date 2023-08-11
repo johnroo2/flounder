@@ -1,9 +1,11 @@
 import {Row, Col, Button, Typography, Card, Empty} from 'antd'
-import router from 'next/router'
+import { useRouter } from 'next/router'
 
 const {Title} = Typography
 
 export default function NotFoundPage(){
+    const router = useRouter();
+    
     return(
         <Row className="base-fullheight base-flexcenter">
           <Col span={16} className="flex items-center justify-center">

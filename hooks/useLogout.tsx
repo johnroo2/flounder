@@ -1,5 +1,5 @@
 import cookies from "@/utils/cookies"
-import router from "next/router"
+import { useRouter } from "next/router"
 
 export const useLogout = () => {
 
