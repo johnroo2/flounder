@@ -8,7 +8,8 @@ import { EditOutlined, UploadOutlined } from "@ant-design/icons";
 import EditProfile from "@/components/modals/EditProfile";
 import FullUpload from "@/components/misc/FullUpload";
 import PointsChart from "@/components/chart/PointsChart";
-import { Mode, modeOptions } from "..";
+import type { Mode } from '@/types/Mode';
+import { modeOptions } from '@/types/Mode';
 
 const {Title, Text} = Typography
 
