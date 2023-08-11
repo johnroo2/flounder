@@ -74,7 +74,7 @@ const Navbar = () => {
             <Col>
                 <Row className="flex flex-row gap-12 items-center">
                     <Title level={3} className="items-center justify-center mt-2">
-                        <Link href={currentUser ? "/dashboard" : "/"}>
+                        <Link href={"/"}>
                             <span className="text-white hover:text-white">
                                 🐟 Flounder
                             </span>
@@ -83,7 +83,7 @@ const Navbar = () => {
                     <Row className="flex flex-row gap-8 items-center">
                         {currentUser && 
                          <Link
-                         href={currentUser ? "dashboard" : `/`}>
+                         href={`/`}>
                              <Text 
                              className="text-white">
                                  Dashboard
