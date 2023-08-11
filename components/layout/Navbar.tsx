@@ -1,17 +1,15 @@
 import { Typography, Button, Col, Dropdown, MenuProps, Switch, Row, Tooltip} from "antd"
-import { useLogout } from "@/hooks/useLogout"
 import { UserOutlined, SettingOutlined } from "@ant-design/icons";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import Link from "next/link";
 import { useState } from "react";
 import { PolyWave } from "./Waves";
 import { useRouter } from "next/router";
+import cookies from "@/utils/cookies";
 
 const {Title, Text} = Typography
 
 const Navbar = () => {
-
-    const {logout:logout} = useLogout();
     const {currentUser:currentUser} = useCurrentUser();
     const [waveState, setWaveState] = useState<boolean>(true);
     const router = useRouter()
@@ -58,7 +56,10 @@ const Navbar = () => {
             key: '1',
             label: (
                 <div className="navbar-menu">
-                <Text onClick={logout} className="text-black hover:text-600">
+                <Text onClick={() => {
+                    router.push('/')
+                    cookies.remove("flounder-webapp-currentUser")
+                }} className="text-black hover:text-600">
                     Logout
                 </Text>
                 </div>

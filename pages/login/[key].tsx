@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 const {Title} = Typography;
 
-export default function Login(){
+export default function LoginKey(){
     const router = useRouter();
     const [form] = Form.useForm();
     const {login:login} = useLogin();

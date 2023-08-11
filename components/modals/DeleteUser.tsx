@@ -2,7 +2,8 @@ import {Row, Col, Modal, Divider, Button, Typography, notification} from 'antd'
 import { userService } from '@/services';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import useCurrentUser from '@/hooks/useCurrentUser';
-import { useLogout } from '@/hooks/useLogout';
+import cookies from '@/utils/cookies';
+import { useRouter } from 'next/router';
 
 const {Text, Title} = Typography
 
@@ -15,13 +16,14 @@ interface props{
 
 export default function DeleteUser({open, close, details, refreshData}:props){
     const {currentUser:currentUser} = useCurrentUser();
-    const {forcelogout: forcelogout} = useLogout();
+    const router = useRouter();
 
     const submit = async() => {
         try{
             await userService.delete(details.id);
             if(details?.username === currentUser?.username){
-                forcelogout();
+                router.push('/signedout')
+                cookies.remove("flounder-webapp-currentUser")
             }
             else{
                 makeNotification('success')
