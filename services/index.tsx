@@ -4,7 +4,7 @@ import { ProfileService } from "./profileservice";
 import { PointUpdateService } from "./pointupdateservice";
 import { ProblemService } from "./problemservice";
 
-const url = "http://10.0.120.159:8000/"
+const url = "https://10.0.120.159:8000/"
 
 export const userService = new UserService(url)
 export const authService = new AuthService(url)
