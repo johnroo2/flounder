@@ -20,8 +20,6 @@ export default function AddProblem({open, close, refreshData, currentUser}:props
     const [image, setImage] = useState<any>(null);
     const [imageData, setImageData] = useState<FormData | null>(null);
 
-    console.log(image)
-
     useEffect(() => {
         return(() => {
             setImage(null)
@@ -39,7 +37,6 @@ export default function AddProblem({open, close, refreshData, currentUser}:props
             byteArrays.push(byteCharacters.charCodeAt(i));
             }
             const blob = new Blob([new Uint8Array(byteArrays)], { type: 'image/jpeg' });
-            console.log(blob);
             setImage(image);
         }
         catch(err){

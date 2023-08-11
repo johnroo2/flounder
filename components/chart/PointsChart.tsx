@@ -231,7 +231,6 @@ export default function PointsChart({userData, mode, setPoints}:
       if(grouped.length === 0){
         return grouped
       }
-      console.log(grouped)
       grouped[0].y = rawData.points
       return grouped
     }

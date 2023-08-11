@@ -15,14 +15,14 @@ class CookieTracker {
         await Cookies.set(key, value);
         this.cookies[key] = value;
         this.cookies={...this.cookies}
-        this.logChange();
+        //this.logChange();
     }
  
     public remove = async(key:string) => {
         await Cookies.remove(key);
         delete this.cookies[key];
         this.cookies={...this.cookies}
-        this.logChange();
+        //this.logChange();
     }
 
     public logChange():void{

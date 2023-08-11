@@ -20,7 +20,7 @@ export default function About(){
                 </Paragraph>
                 <Paragraph className="text-left text-lg">
                 I, John Liu, built this site in August 2023 as a side project for fun. 
-                On this site, users can solve (mostly) math problems and earn points. I don't necessarily own all of the 
+                On this site, users can solve (mostly) math problems and earn points. I don&apos;t necessarily own all of the 
                 questions that I post here and you can assume that most of the problems here are copy-pasted from somewhere 
                 else. Happy solving!
                 </Paragraph>
