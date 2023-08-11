@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.utils.crypto import get_random_string
 from api import utils
+import json
 
 # Create your models here.
 
@@ -14,6 +15,8 @@ class User(models.Model):
     lastname = models.CharField(max_length=20)
     email = models.EmailField(unique=True)
     about = models.CharField(max_length=1000, blank=True)
+    points = models.IntegerField()
+    history = ArrayField(models.CharField(max_length=300), default=list)
     isAdmin = models.BooleanField(default=False)
     isMod = models.BooleanField(default=False)
     image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
@@ -31,6 +34,23 @@ class User(models.Model):
             "isMod": self.isMod,
             "createdAt": self.createdAt,
         }
+    
+    def updatepoints(self):
+        pointupdates = PointUpdate.objects.filter(user=self.id)
+        sum = 0
+        updates = []
+        updates.append(json.dumps({'id':-1, 'value':0, 'date':self.createdAt.isoformat()}))
+        if pointupdates:
+            for update in pointupdates:
+                problems = Problem.objects.filter(id=update.problem.id)
+                if problems:
+                    for problem in problems:
+                        sum += problem.value
+                        datestring = update.createdAt.isoformat()
+                        updates.append(json.dumps({'id':problem.id, 'value':problem.value, 'date':datestring}))
+        self.points = sum
+        self.history = updates
+        self.save()
 
     def profile(self, username):
         if username == self.username:
@@ -41,6 +61,8 @@ class User(models.Model):
                 "about": self.about,
                 "isAdmin": self.isAdmin,
                 "isMod": self.isMod,
+                "points": self.points,
+                "history": self.history,
                 "image": imageHandler.convertImage(self.image.url) if self.image else None,
                 "createdAt": self.createdAt,
             }

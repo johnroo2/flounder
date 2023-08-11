@@ -21,7 +21,8 @@ export default function PointsChart({userData, mode, setPoints}:
       if(userData && userData.username){
           try{
               const info = await getProfile(userData.username)
-              setRawData({points:info.output.points, history:info.output.history})
+              const history = info.output.history.map((item:string) => JSON.parse(item))
+              setRawData({points:info.output.points, history:history})
               if(setPoints){setPoints(info.output.points)}
               setLoading(false)
           }

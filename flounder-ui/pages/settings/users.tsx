@@ -1,4 +1,4 @@
-import { userService, pointService } from "@/services"
+import { userService } from "@/services"
 import { useState, useEffect } from "react"
 import {Row, Col, Card, Table, Typography, Button} from "antd"
 import dayjs from "dayjs"
@@ -16,24 +16,7 @@ export default function Users(){
     const fetch = async() => {
         setLoading(true)
         try{
-            const response = await (async(pointlessList:Array<any>) => {
-                const clone = [...pointlessList]
-                for(const user of pointlessList){
-                    try{
-                        const pointresponse = await pointService.get(user.username)
-                        clone.forEach((item:any) => {
-                            if(item.username === user.username && pointresponse){
-                                item.points =  pointresponse?.points;
-                            }
-                        })
-                    }
-                    catch(err){
-                        console.log(err)
-                        continue;
-                    }
-                }
-                return clone;
-            })(await userService.get({}))
+            const response = await userService.get({})
             setUserList([...response])
             setLoading(false)
         }
@@ -46,6 +29,32 @@ export default function Users(){
     useEffect(() => {
         fetch();
     }, [])
+
+    const handlePaginationChange = async(
+        pagination:any,
+        filters:any,
+        sorter:any,
+        extra:any
+    ) => {
+        const {action} = extra;
+
+        if (action === 'sort') {
+            const params = {
+                sortBy: sorter.columnKey ? sorter.columnKey : 'id',
+                sortDirection: sorter.order === 'ascend' ? 'asc' : 'desc',
+            };
+            setLoading(true)
+            try{
+                const response = await userService.get(params)
+                setUserList([...response])
+                setLoading(false)
+            }
+            catch(err){
+                console.log(err)
+                setLoading(false)
+            }
+        }
+    }
 
     const columns:Array<any> = [
         {
@@ -62,8 +71,8 @@ export default function Users(){
         },
         {
             title: "Name",
-            dataIndex: "name",
-            key: "name",
+            dataIndex: "firstname",
+            key: "firstname",
             width: 150,
             sorter: true,
             align: "center",
@@ -173,6 +182,7 @@ export default function Users(){
                     pagination={{
                         pageSize:5
                     }}
+                    onChange={handlePaginationChange}
                     loading={loading}
                     columns={columns}
                     dataSource={userList}>

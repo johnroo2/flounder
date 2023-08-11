@@ -13,6 +13,16 @@ def data_list(request):
     if request.method == 'GET':
         #decoder.checkAuthorization(request)
         users = User.objects.all()
+        for user in users:
+            user.updatepoints()
+        if request.GET.get('sortBy', False) and request.GET.get('sortDirection', False):
+            prefix = ""
+            if request.GET.get('sortDirection', 'asc') == "desc":
+                prefix = "-"
+            users = User.objects.all().order_by(str(prefix) + str(request.GET.get('sortBy', 'pk')))
+        else:
+            users = User.objects.all().order_by('pk')
+
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
@@ -31,6 +41,7 @@ def data_detail_profile(request, username):
         found = User.objects.filter(username=username)
         if found:
             for find in found:
+                find.updatepoints()
                 profile = find.profile(username)
                 return Response(profile)
         else:
@@ -42,25 +53,6 @@ def data_detail_profile(request, username):
             prof_serializer.save()
             return Response(prof_serializer.data, status=status.HTTP_202_ACCEPTED)
         return Response(prof_serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
-@api_view(['GET'])
-def data_detail_points(request, username):
-    #decoder.checkAuthorization(request)
-    found = User.objects.filter(username=username)
-    if found:
-        for find in found:
-            pointupdates = PointUpdate.objects.filter(user=find.id)
-            sum = 0
-            updates = []
-            updates.append({'id':-1, 'value':0, 'date':find.createdAt})
-            if pointupdates:
-                for update in pointupdates:
-                    problems = Problem.objects.filter(id=update.problem.id)
-                    if problems:
-                        for problem in problems:
-                            sum += problem.value
-                            updates.append({'id':problem.id, 'value':problem.value, 'date':update.createdAt})
-            return Response({'points':sum, 'history':updates}, status=status.HTTP_200_OK)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])

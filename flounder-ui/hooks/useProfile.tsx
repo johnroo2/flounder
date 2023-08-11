@@ -1,4 +1,4 @@
-import { profileService, pointService } from "@/services";
+import { profileService } from "@/services";
 
 //profile services to find by username
 
@@ -6,11 +6,10 @@ export const useProfile = () => {
     const get = async(username:string) => {
         try{
             const responseProfile = await profileService.get(username)
-            const responsePoint = await pointService.get(username)
-            if(responseProfile && responsePoint){
-                return {output:{...responseProfile, ...responsePoint}, pass:true};
+            if(responseProfile){
+                return {output:responseProfile, pass:true};
             }
-            return {output:{...responseProfile, ...responsePoint}, pass:false};
+            return {output:responseProfile, pass:false};
         }
         catch(err){
             console.log(err)
