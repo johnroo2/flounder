@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import moment from 'moment'
 import 'chartjs-adapter-moment';
 import { Empty, Spin } from "antd";
-import type { Mode } from "@/pages";
+import type { Mode } from '@/types/Mode';
+import { modeOptions } from '@/types/Mode';
 
 Chart.register(...registerables)
 

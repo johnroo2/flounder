@@ -1,14 +1,13 @@
-import { Button, Row, Col, Typography, Card, List, Segmented, Select } from 'antd';
+import { Row, Col, Typography, Card, List, Select } from 'antd';
 import useCurrentUser from '@/hooks/useCurrentUser';
 import Link from 'next/link';
 import PointsChart from '@/components/chart/PointsChart';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
+import type { Mode } from '@/types/Mode';
+import { modeOptions } from '@/types/Mode';
 
 const { Title } = Typography;
-
-export type Mode = "Last 24 Hours" | "Last Week" | "Last 28 Days" | "Last 90 Days" | "Last Year" | "All Time"
-export const modeOptions = ["Last 24 Hours", "Last Week", "Last 28 Days", "Last 90 Days", "Last Year", "All Time"]
 
 export default function Index() {
   const { currentUser: currentUser } = useCurrentUser();
