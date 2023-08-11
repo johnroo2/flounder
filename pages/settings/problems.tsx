@@ -147,7 +147,7 @@ export default function Problems(){
             width: 150,
             align: "center",
             render: ((text:string, item:any) => {
-                return <Link href={`/problems/key/${item.key}`}>
+                return <Link href={`/problems/view/${item.key}`}>
                     <Text className="hover:text-blue-500 trnasition-all duration-300">
                         {item.key}
                     </Text></Link>

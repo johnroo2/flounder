@@ -1,7 +1,14 @@
 import {Row, Col, Button, Typography, Card, Empty} from 'antd'
+import { GetStaticProps } from 'next'
 import router from 'next/router'
 
 const {Title} = Typography
+
+export const getStaticProps: GetStaticProps = async () => {
+    const res = await fetch('https://api.github.com/repos/johnroo2/flounder')
+    const repo = await res.json()
+    return { props: { repo } }
+}   
 
 export default function NotFoundPage(){
     return(

@@ -26,8 +26,6 @@ SECRET_KEY = 'django-insecure-czvedv)-(q-utzx2-1gqlk2iq5v#-mi=my(!*u%y$gh$2id_#+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 APPEND_SLASH = False
 
 # Application definition
@@ -61,7 +59,11 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:8000',
     'http://localhost:3000',
     'http://localhost:3001',
+    'https://flounder-app.vercel.app'
 )
+CORS_ALLOW_CREDENTIALS = True
+
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 
 ROOT_URLCONF = 'flounder.urls'
 
@@ -82,7 +84,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'flounder.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
