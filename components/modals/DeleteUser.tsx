@@ -1,4 +1,4 @@
-import {Row, Col, Modal, Divider, Button, Typography, notification} from 'antd'
+import {Row, Modal, Divider, Button, Typography, notification} from 'antd'
 import { userService } from '@/services';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import useCurrentUser from '@/hooks/useCurrentUser';

@@ -2,7 +2,7 @@ import { Button, Row, Col, Typography, Card, List, Segmented, Select } from 'ant
 import useCurrentUser from '@/hooks/useCurrentUser';
 import Link from 'next/link';
 import PointsChart from '@/components/chart/PointsChart';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 const { Title } = Typography;
@@ -16,9 +16,11 @@ export default function Index() {
   const [mode, setMode] = useState<Mode>("Last 28 Days")
   const router = useRouter();
 
-  if(currentUser){
-    router.replace('/dashboard')
-  }
+  useEffect(() => {
+    if (currentUser) {
+      router.replace('/dashboard');
+    }
+  }, [currentUser, router]);
 
   return (
     <>
