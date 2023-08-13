@@ -4,7 +4,8 @@ import {Row, Col, Card, Typography, Tooltip, Image, Spin, Button, Divider, Resul
 import dayjs from "dayjs";
 import { useProblemKey } from "@/hooks/useProbemKey";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { CheckCircleTwoTone, CloseCircleTwoTone, DownOutlined, InfoCircleTwoTone, UpOutlined } from "@ant-design/icons";
+import { LikeFilled, DislikeFilled, LikeOutlined, DislikeOutlined,
+    CheckCircleTwoTone, CloseCircleTwoTone, DownOutlined, InfoCircleTwoTone, UpOutlined } from "@ant-design/icons";
 
 const {Title, Text} = Typography
 
@@ -93,12 +94,28 @@ export default function Problem(){
                     title={
                         <>
                         {!notFound && problemData &&
-                            <Title level={3} className="mt-4">
-                                {problemData.title} <br/>
-                                <span className="text-[0.7em]">Written by: {problemData.creator}</span><br/>
-                                <span className="text-[0.65em] italic font-light">Created:{" "} 
-                                {dayjs(problemData.createdAt).format('YYYY-MM-DD HH:mm:ss')}</span>
-                            </Title>
+                            <Row className="flex flex-row justify-between">
+                                <Title level={3} className="mt-4">
+                                    {problemData.title} <br/>
+                                    <span className="text-[0.7em]">Written by: {problemData.creator}</span><br/>
+                                    <span className="text-[0.65em] italic font-light">Created:{" "} 
+                                    {dayjs(problemData.createdAt).format('YYYY-MM-DD HH:mm:ss')}</span>
+                                </Title>
+                                <Row className="flex flex-row mt-4 mr-12 gap-3 items-center">
+                                    <span className="flex place-items-center text-[1.75em]">
+                                    {problemData.selfvoted === "upvote" ? <LikeFilled/> : <LikeOutlined/>}
+                                    </span>
+                                    <span className="flex place-items-center text-[1.25em]">
+                                    Vote
+                                        <span className="ml-2">
+                                        {problemData.likes - problemData.dislikes}
+                                        </span>
+                                    </span>
+                                    <span className="flex place-items-center text-[1.75em]">
+                                    {problemData.selfvoted === "downvote" ? <DislikeFilled/> : <DislikeOutlined/>}
+                                    </span>
+                                </Row>
+                            </Row>
                         }
                         {notFound && 
                         <Title level={4} className="mt-4">

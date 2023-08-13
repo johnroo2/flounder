@@ -6,7 +6,7 @@ export const useProblemKey = () => {
     const get = async(key:string, username?:string) => {
         try{
             const response = username ? await problemService.getKeyUser(key, username) :
-                await problemService.getKey(key)
+            await problemService.getKey(key)
             if(response){
                 return {output:response, pass:true};
             }
