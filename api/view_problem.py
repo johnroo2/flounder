@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from base.models import Problem, User
 from rest_framework.exceptions import NotFound, APIException
-from .serializers import ProblemSerializer, ProblemImageSerializer, PointUpdateSerializer
+from .serializers import ProblemSerializer, ProblemImageSerializer, PointUpdateSerializer, ProblemVoteSerializer
 from . import utils
 
 decoder = utils.JWTDecoder()
@@ -92,6 +92,52 @@ def data_detail_key(request, key):
             return Response({'pass': 'incorrect', 'answer': find.options[find.answer], 'solution': find.solution})
         else:
             raise NotFound("Problem not found.")
+        
+# @api_view(['POST'])
+# def data_detail_vote(request, key):
+#      #decoder.checkAuthorization(request)
+#     found = Problem.objects.filter(key=key)
+#     if found and request.data['user'] and request.data['status']:
+#         user = User.objects.get(username=request.data['user'])
+#         for find in found:
+#             params =  {
+#                 "user":user.id,
+#                 "problem":find.id,
+#                 "status":request.data['status']
+#             }
+#             if user not in find.voters.all():
+#                 find.voters.add(user) 
+                
+#                 problemvote_serializer = ProblemVoteSerializer(data = params)
+#                 if problemvote_serializer.is_valid():
+#                     if request.data['status'] > 0:
+#                         find.likes = find.likes + 1
+#                     else:
+#                         find.dislikes = find.dislikes + 1
+#                     find.save()
+#                     problemvote_serializer.save()
+#                     find.updatevote_status()
+#                     return Response(problemvote_serializer.data, status=status.HTTP_202_ACCEPTED)
+#                 else:
+#                     raise APIException("Could not update vote")
+#             else:
+#                 find.voters.remove(user)
+
+#                 problemvote_serializer = ProblemVoteSerializer(data = params)
+#                 if problemvote_serializer.is_valid():
+#                     if request.data['status'] < 0:
+#                         find.likes = find.likes - 1
+#                     else:
+#                         find.dislikes = find.dislikes - 1
+#                     find.save()
+#                     problemvote_serializer.save()
+#                     find.updatevote_status()
+#                     return Response(problemvote_serializer.data, status=status.HTTP_202_ACCEPTED)
+#                 else:
+#                     raise APIException("Could not delete vote")
+#         raise NotFound('User not found')
+#     else:
+#         raise NotFound("Problem not found.")
         
 @api_view(['GET'])
 def data_detail_key_user(request, key, user):
