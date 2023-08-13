@@ -34,6 +34,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+.venv
+
 db.sqlite3
 data.json
 profile_images

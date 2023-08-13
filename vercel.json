@@ -1,0 +1,23 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "package.json",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "flounder/wsgi.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "vercel_app/wsgi.py"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "pages/_document.tsx"
+      }
+    ]
+  }
