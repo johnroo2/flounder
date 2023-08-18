@@ -6,6 +6,7 @@ import { CheckCircleTwoTone, CloseCircleTwoTone, DislikeFilled, LikeFilled, Minu
 import AddProblem from "@/components/modals/AddProblem"
 import useCurrentUser from "@/hooks/useCurrentUser"
 import Link from "next/link"
+import React from "react"
 
 const {Text, Title} = Typography
 const {Search} = Input
@@ -133,16 +134,16 @@ export default function Problems(){
                     "correct":<CheckCircleTwoTone twoToneColor="#22c55e"/>
                 }
                 return(
-                    <Row className="flex flex-row gap-2 items-center">
-                        {currentUser && renders[solveState]}
-                        <Link
-                        href={`/problems/${item.key}`}>
-                            <Text
-                            className="text-sky-600 hover:text-sky-400 transition-all duration-300">
-                                {item.title}
-                            </Text>
-                        </Link>
-                    </Row>
+                    <React.Fragment key={item.id}>
+                        <Row className="flex flex-row gap-2 items-center">
+                            {currentUser && renders[solveState]}
+                            <Link href={`/problems/${item.key}`}>
+                                <Text className="text-sky-600 hover:text-sky-400 transition-all duration-300">
+                                    {item.title}
+                                </Text>
+                            </Link>
+                        </Row>
+                    </React.Fragment>
             )})
         },
         {

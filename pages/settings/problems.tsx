@@ -185,7 +185,7 @@ export default function Problems(){
             align: "center",
             render: ((text:string, item:any) => {
                 return item.options.map((option:string, key:number) => 
-                <Text className={`transition-all duration-300 font-light ${(key == item.answer && showAnswers) ? "text-sky-500" : ""}`}>
+                <Text key={key} className={`transition-all duration-300 font-light ${(key == item.answer && showAnswers) ? "text-sky-500" : ""}`}>
                     {option}{key == item.options.length-1 ? "" : ", "}
                 </Text>
                 )
@@ -273,8 +273,8 @@ export default function Problems(){
                                     }
                                 }}
                                 >
-                                {searchQueries.map((item) => (
-                                    <Select.Option key={item.label} value={item.label}>
+                                {searchQueries.map((item, key) => (
+                                    <Select.Option key={key} value={item.label}>
                                     {item.label}
                                     </Select.Option>
                                 ))}
