@@ -134,16 +134,14 @@ export default function Problems(){
                     "correct":<CheckCircleTwoTone twoToneColor="#22c55e"/>
                 }
                 return(
-                    <React.Fragment key={item.id}>
-                        <Row className="flex flex-row gap-2 items-center">
-                            {currentUser && renders[solveState]}
-                            <Link href={`/problems/${item.key}`}>
-                                <Text className="text-sky-600 hover:text-sky-400 transition-all duration-300">
-                                    {item.title}
-                                </Text>
-                            </Link>
-                        </Row>
-                    </React.Fragment>
+                    <Row className="flex flex-row gap-2 items-center">
+                        {currentUser && renders[solveState]}
+                        <Link href={`/problems/${item.key}`}>
+                            <Text className="text-sky-600 hover:text-sky-400 transition-all duration-300">
+                                {item.title}
+                            </Text>
+                        </Link>
+                    </Row>
             )})
         },
         {
@@ -161,17 +159,17 @@ export default function Problems(){
             key: "votes",
             width: 150,
             render: ((text:string, item:any) => {
+                const percent_length = (item.likes + item.dislikes > 0) ? (100 * item.likes)/(item.likes+item.dislikes) : 0 
                 return (
                     <Row className="flex flex-row items-center justify-center gap-2">
                         <DislikeFilled className={`pl-[10%]`}/>
                         <Text>
                             {item.dislikes}
                         </Text>
-                        <div className="rounded-full grow h-1 bg-sky-300">
-                            <div className={item.dislikes == 0 ? 
-                            (item.likes > 0 ? 
-                            '' : 'rounded-full h-1 w-full bg-gray-300') : 
-                            `rounded-l-full h-1 w-[${(100 * item.likes)/(item.likes+item.dislikes)}%] bg-gray-300`}/>
+                        <div className="rounded-full grow h-1 bg-gray-300">
+                            <div className={percent_length == 0 ? 
+                            '`rounded-l-full h-1 w-full bg-gray-300`':
+                            `rounded-l-full h-1 w-[${percent_length}%] bg-sky-300`}/>
                         </div>
                         <Text>
                             {item.likes}
