@@ -1,7 +1,7 @@
 {
     "public-pages":{
         "startswith":[
-            "/profile", "/problems/view"
+            "/profile"
         ],
         "equals":[
             "/", "/login", "/signup", "/about", "/problems", "/users"

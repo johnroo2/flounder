@@ -101,8 +101,8 @@ export default function Profile(){
                                             {(currentUser && currentUser?.username === username) && 
                                             <FullUpload 
                                             render={
-                                                <span className="flex flex-row gap-2 text-sky-600 hover:text-sky-400
-                                                    transition-all duration-300 items-center">
+                                                <span className="flex flex-row gap-2 text-sky-600 hover:text-sky-400 transition-all duration-300
+                                                    items-center">
                                                     <UploadOutlined/> 
                                                     Change Profile Picture
                                                 </span>

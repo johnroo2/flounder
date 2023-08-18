@@ -2,7 +2,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import ValidationError, NotFound
 from rest_framework import status
-from base.models import User, PointUpdate, Problem
+from django.db.models import Q, F, Value
+from django.db.models.functions import Concat
+from base.models import User
 from .serializers import UserSerializer, ProfileSerializer
 from . import utils
 
@@ -13,6 +15,38 @@ def data_list(request):
     if request.method == 'GET':
         #decoder.checkAuthorization(request)
         users = User.objects.all()
+
+        for key in request.GET.keys():
+            filter_kwargs = {}
+            if key == "name":
+                try:
+                    value = request.GET[key]
+                    combined_name_filter = Q(firstname__icontains=value) | Q(lastname__icontains=value) | Q(fullname__icontains=value)
+                    users = User.objects.annotate(
+                        fullname=Concat(F("firstname"), Value(" "), F("lastname"))
+                    ).filter(combined_name_filter)
+                except: 
+                    users = User.objects.none()
+            elif key == "username":
+                try:
+                    value = request.GET[key]
+                    filter_kwargs["username__contains"] = value
+                except:
+                    users = User.objects.none()
+            elif key == "email":
+                try:
+                    value = request.GET[key]
+                    filter_kwargs["email__contains"] = value
+                except:
+                    users = User.objects.none()
+            elif key == "points":
+                try:
+                    value = int(request.GET[key])
+                    filter_kwargs["points__exact"] = value
+                except: 
+                    users = User.objects.none()
+            users = users.filter(**filter_kwargs)
+
         for user in users:
             user.updatepoints()
         if request.GET.get('sortBy', False) and request.GET.get('sortDirection', False):

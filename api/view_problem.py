@@ -2,6 +2,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from base.models import Problem, User
+from django.db.models import F, Q
 from rest_framework.exceptions import NotFound, APIException
 from .serializers import ProblemSerializer, ProblemImageSerializer, PointUpdateSerializer, ProblemVoteSerializer
 from . import utils
@@ -15,6 +16,23 @@ def data_list(request):
         problems = Problem.objects.all()
         for problem in problems:
             problem.updatevote_status()
+
+        for key in request.GET.keys():
+            filter_kwargs = {}
+            if key == "creator":
+                try:
+                    value = request.GET[key]
+                    username_filter = Q(user_id__username__icontains=value)
+                    problems = Problem.objects.filter(username_filter)
+                except: 
+                    problems = Problem.objects.none()
+            elif key == "value":
+                try:
+                    value = int(request.GET[key])
+                    filter_kwargs["value__exact"] = value
+                except: 
+                    problems = Problem.objects.none()
+            problems = problems.filter(**filter_kwargs)
 
         if request.GET.get('sortBy', False) and request.GET.get('sortDirection', False):
             prefix = ""
@@ -145,6 +163,7 @@ def data_detail_key_user(request, key, user):
     found = Problem.objects.filter(key=key)
     if found:
         for find in found:
+            find.updatevote_status()
             if user:
                 userquery = User.objects.all().filter(username=user)
                 for user in userquery:

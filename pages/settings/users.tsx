@@ -1,22 +1,44 @@
 import { userService } from "@/services"
 import { useState, useEffect } from "react"
-import {Row, Col, Card, Table, Typography, Button} from "antd"
+import {Row, Col, Card, Table, Typography, Button, Select, Input} from "antd"
 import dayjs from "dayjs"
 import DeleteUser from "@/components/modals/DeleteUser"
 import { ReloadOutlined } from "@ant-design/icons"
 
 const {Text, Title} = Typography
+const {Search} = Input
 
 export default function Users(){
     const [userList, setUserList] = useState<any>([]);
     const [focusUser, setFocusUser] = useState<any>({});
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
+    const [searchLabel, setSearchLabel] = useState<string>()
+    const [searchParam, setsearchParam] = useState<string>()
 
-    const fetch = async() => {
+    const searchQueries:{label:string, queryparam:string}[] = [
+        {
+            label:"Name",
+            queryparam:"name"
+        },
+        {
+            label:"Username",
+            queryparam:"username"
+        },
+        {
+            label:"Email",
+            queryparam:"email"
+        },
+        {
+            label:"Points",
+            queryparam:"points"
+        }
+    ]
+
+    const fetch = async(params?:any) => {
         setLoading(true)
         try{
-            const response = await userService.get()
+            const response = await userService.get(params)
             setUserList([...response])
             setLoading(false)
         }
@@ -44,15 +66,7 @@ export default function Users(){
                 sortDirection: sorter.order === 'ascend' ? 'asc' : 'desc',
             };
             setLoading(true)
-            try{
-                const response = await userService.get(params)
-                setUserList([...response])
-                setLoading(false)
-            }
-            catch(err){
-                console.log(err)
-                setLoading(false)
-            }
+            await fetch(params)
         }
     }
 
@@ -172,22 +186,60 @@ export default function Users(){
             <Col span={20}>
                 <Card
                 title={
-                    <Row className="flex flex-row justify-between">
+                    <Row className="flex flex-row justify-between items-center">
                         <Title level={4} className="pt-4">
                             Users
                         </Title>
-                        <Button className="rounded-full"
-                            type="primary"
-                            ghost
-                            onClick={() => {fetch()}}>
-                            <ReloadOutlined/>
-                        </Button>
+                        <Row className="flex flex-row mt-4 gap-4 justify-center items-center">
+                            <Col>
+                                <Select
+                                className="min-w-[150px]"
+                                placeholder="Select search type..."
+                                value={searchLabel}
+                                onChange={(value) => {
+                                    const selectedQuery = searchQueries.find((query) => query.label === value);
+                                    if(selectedQuery){
+                                        setSearchLabel(selectedQuery.label);
+                                        setsearchParam(selectedQuery.queryparam);
+                                    }
+                                }}
+                                >
+                                {searchQueries.map((item) => (
+                                    <Select.Option key={item.label} value={item.label}>
+                                    {item.label}
+                                    </Select.Option>
+                                ))}
+                                </Select>
+                            </Col>
+                            <Col>
+                            {(searchLabel && searchParam) ?
+                                <Search placeholder={"..."}
+                                allowClear
+                                className="min-w-[150px]"
+                                onSearch={(value:any) => {
+                                    fetch({[searchParam]:value})
+                                }}
+                                />
+                                :
+                                <Search disabled
+                                className="min-w-[150px]"
+                                onSearch={() => {}}
+                                />
+                            }
+                            </Col>
+                            <Button className="rounded-full"
+                                type="primary"
+                                ghost
+                                onClick={() => {fetch()}}>
+                                <ReloadOutlined/>
+                            </Button>
+                        </Row>
                     </Row>
                 }>
                     <Table
                     size="small"
                     pagination={{
-                        pageSize:5
+                        pageSize:10
                     }}
                     onChange={handlePaginationChange}
                     loading={loading}

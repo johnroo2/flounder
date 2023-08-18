@@ -18,7 +18,7 @@ export default function LoginKey(){
     const handleSubmit = async(formvalues:any) => {
         const info = await login(formvalues.username, formvalues.password)
         if(info.pass){
-            router.push(info.output?.username ? `/problems/solve/${key}` : "/");
+            router.push(info.output?.username ? `/problems/${key}` : "/");
         }
         else{
             makeNotification(info?.output?.response?.data)

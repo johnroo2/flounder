@@ -139,7 +139,7 @@ const Navbar = () => {
                     </Tooltip>}
                         {currentUser ?                   
                         <Dropdown menu={{ items }} trigger={["click"]} placement="bottomRight">
-                            <div className="flex flex-row gap-3 bg-sky-500 items-center justify-center text-white rounded-full p-2">
+                            <div className="flex flex-row gap-2 bg-sky-500 items-center justify-center text-white rounded-full py-1 px-3">
                                 <UserOutlined className="text-white text-[1.5em]"/> 
                                 {currentUser.username}
                             </div>

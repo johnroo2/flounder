@@ -1,5 +1,8 @@
 from rest_framework import serializers
 from base.models import User, Problem, PointUpdate, ProblemVote
+from . import utils
+
+imageHandler = utils.ImageToBase64()
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

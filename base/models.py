@@ -93,7 +93,6 @@ class Problem(models.Model):
 
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
-    vote_history = ArrayField(models.CharField(max_length=300), default=list)
     voters = models.ManyToManyField(User, related_name="voteds", blank=True)
     attempts = models.ManyToManyField(User, related_name='attempteds', blank=True)
     solvers = models.ManyToManyField(User, related_name='solveds', blank=True)
@@ -110,23 +109,21 @@ class Problem(models.Model):
         updates.append(json.dumps({'id':-1, 'value':0, 'date':self.createdAt.isoformat()}))
         if problemvotes:
             for update in problemvotes:
-                if update.status > 0:
-                    likesum += 1
-                else:
-                    dislikesum += 1
-                datestring = update.createdAt.isoformat()
-                updates.append(json.dumps({'id':update.id, 'value':update.status, 'date':datestring}))
                 if not usermap.keys().__contains__(str(update.user.pk)):
                     usermap[str(update.user.pk)] = update.status
                 else:
                     usermap[str(update.user.pk)] += update.status
         self.voters.clear()
         for key in usermap.keys():
-            if usermap[key] != 0:
+            status = usermap[key]
+            if status != 0:
+                if status > 0:
+                    likesum += 1
+                else:
+                    dislikesum += 1
                 self.voters.add(key)
         self.likes = likesum
         self.dislikes = dislikesum
-        self.vote_history = updates
         self.save()
 
     def selfvotes(self, userquery):
@@ -138,15 +135,19 @@ class Problem(models.Model):
                     usermap[str(update.user.pk)] = update.status
                 else:
                     usermap[str(update.user.pk)] += update.status
-        if usermap[str(userquery.pk)] > 0:
-            return "upvote"
-        elif usermap[str(userquery.pk)] < 0:
-            return "downvote"
+        if usermap.keys().__contains__(str(userquery.pk)):
+            if usermap[str(userquery.pk)] > 0:
+                return "upvote"
+            elif usermap[str(userquery.pk)] < 0:
+                return "downvote"
+            else:
+                return "novote"
         else:
             return "novote"
 
     def public(self, userquery=None):
         return {
+            "id":self.id,
             "creator":self.user.username,
             "title":self.title,
             "question":self.question,
@@ -160,7 +161,6 @@ class Problem(models.Model):
             "selfvoted":self.selfvotes(userquery) if userquery else None,
             "likes":self.likes,
             "dislikes":self.dislikes,
-            "vote_history": self.vote_history,
             "createdAt": self.createdAt,
         }
 
@@ -182,3 +182,6 @@ class ProblemVote(models.Model):
     status = models.IntegerField()
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ['problem', 'user']
