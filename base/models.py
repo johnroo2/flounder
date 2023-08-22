@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.utils.crypto import get_random_string
+from django.contrib.auth.hashers import make_password, check_password
 from api import utils
 import json
 
@@ -10,7 +11,7 @@ imageHandler = utils.ImageToBase64()
 
 class User(models.Model):
     username = models.CharField(max_length=20, unique=True)
-    password = models.CharField(max_length=20)
+    password = models.CharField(max_length=1000)
     firstname = models.CharField(max_length=20)
     lastname = models.CharField(max_length=20)
     email = models.EmailField(unique=True)
@@ -27,6 +28,11 @@ class User(models.Model):
 
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.password = make_password(self.password)
+        super(User, self).save(*args, **kwargs)
 
     def public(self):
         return {
@@ -72,7 +78,10 @@ class User(models.Model):
             }
 
     def login(self, username, password):
-        if username == self.username and password == self.password:
+        print(f"Username test: {username == self.username}")
+        print(f"Password:{password}")
+        print(f"Compare:{self.password}")
+        if username == self.username and check_password(password, self.password):
             return self.public()
         return None
     
@@ -178,7 +187,7 @@ class PointUpdate(models.Model):
 
 class ProblemVote(models.Model):
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     status = models.IntegerField()
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)

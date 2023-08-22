@@ -25,7 +25,7 @@ export default function NoPermission(){
             <Row className="flex flex-row gap-2 justify-end">
                 <Button
                 type="primary"
-                className="bg-sky-700"
+                className="bg-sky-600"
                 onClick={() => {router.push('/')}}>
                     Home
                 </Button>

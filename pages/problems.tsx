@@ -64,6 +64,7 @@ export default function Problems(){
                 }
                 return clone;
             })(await problemService.get(params))
+            console.log(response)
             setProblemList([...response])
             setLoading(false)
         }

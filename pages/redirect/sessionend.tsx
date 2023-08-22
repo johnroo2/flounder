@@ -31,7 +31,7 @@ export default function SessionEnd(){
                 </Button>
                 <Button
                 type="primary"
-                className="bg-sky-700"
+                className="bg-sky-600"
                 onClick={() => {router.push('/login')}}>
                     Sign In
                 </Button>

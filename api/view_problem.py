@@ -11,7 +11,6 @@ decoder = utils.JWTDecoder()
 
 @api_view(['GET', 'POST', 'DELETE'])
 def data_list(request):
-    #decoder.checkAuthorization(request)
     if request.method == 'GET':
         problems = Problem.objects.all()
         for problem in problems:
@@ -44,6 +43,7 @@ def data_list(request):
         serializer = ProblemSerializer(problems, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
+        decoder.checkAuthorization(request)
         serializer = ProblemSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -52,7 +52,7 @@ def data_list(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def data_detail(request, pk):
-    #decoder.checkAuthorization(request)
+    decoder.checkAuthorization(request)
     try:
         focus = Problem.objects.get(pk=pk)
     except Problem.DoesNotExist:
@@ -73,7 +73,6 @@ def data_detail(request, pk):
     
 @api_view(['GET','POST'])
 def data_detail_key(request, key):
-    #decoder.checkAuthorization(request)
     if request.method == "GET":
         found = Problem.objects.filter(key=key)
         if found:
@@ -84,6 +83,7 @@ def data_detail_key(request, key):
         else:
             raise NotFound("Problem not found.")
     elif request.method == "POST":
+        decoder.checkAuthorization(request)
         found = Problem.objects.filter(key=key)
         if found and request.data['user']:
             user = User.objects.get(username=request.data['user'])
@@ -111,55 +111,9 @@ def data_detail_key(request, key):
         else:
             raise NotFound("Problem not found.")
         
-# @api_view(['POST'])
-# def data_detail_vote(request, key):
-#      #decoder.checkAuthorization(request)
-#     found = Problem.objects.filter(key=key)
-#     if found and request.data['user'] and request.data['status']:
-#         user = User.objects.get(username=request.data['user'])
-#         for find in found:
-#             params =  {
-#                 "user":user.id,
-#                 "problem":find.id,
-#                 "status":request.data['status']
-#             }
-#             if user not in find.voters.all():
-#                 find.voters.add(user) 
-                
-#                 problemvote_serializer = ProblemVoteSerializer(data = params)
-#                 if problemvote_serializer.is_valid():
-#                     if request.data['status'] > 0:
-#                         find.likes = find.likes + 1
-#                     else:
-#                         find.dislikes = find.dislikes + 1
-#                     find.save()
-#                     problemvote_serializer.save()
-#                     find.updatevote_status()
-#                     return Response(problemvote_serializer.data, status=status.HTTP_202_ACCEPTED)
-#                 else:
-#                     raise APIException("Could not update vote")
-#             else:
-#                 find.voters.remove(user)
-
-#                 problemvote_serializer = ProblemVoteSerializer(data = params)
-#                 if problemvote_serializer.is_valid():
-#                     if request.data['status'] < 0:
-#                         find.likes = find.likes - 1
-#                     else:
-#                         find.dislikes = find.dislikes - 1
-#                     find.save()
-#                     problemvote_serializer.save()
-#                     find.updatevote_status()
-#                     return Response(problemvote_serializer.data, status=status.HTTP_202_ACCEPTED)
-#                 else:
-#                     raise APIException("Could not delete vote")
-#         raise NotFound('User not found')
-#     else:
-#         raise NotFound("Problem not found.")
-        
 @api_view(['GET'])
 def data_detail_key_user(request, key, user):
-    #decoder.checkAuthorization(request)
+    decoder.checkAuthorization(request)
     found = Problem.objects.filter(key=key)
     if found:
         for find in found:
@@ -178,7 +132,7 @@ def data_detail_key_user(request, key, user):
     
 @api_view(['PUT'])
 def data_detail_image(request, pk):
-    #decoder.checkAuthorization(request)
+    decoder.checkAuthorization(request)
     try:
         focus = Problem.objects.get(pk=pk)
     except Problem.DoesNotExist:

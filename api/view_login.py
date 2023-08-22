@@ -19,7 +19,7 @@ def auth(request):
             if login:
                 payload = {
                     'user_id': user.id,
-                    'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+                    'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=1)
                 }
                 secret_key = keyGenerator.getKey()
                 token = {"token": jwt.encode(payload, secret_key, algorithm='HS256')}

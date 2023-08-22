@@ -13,7 +13,7 @@ decoder = utils.JWTDecoder()
 @api_view(['GET', 'POST'])
 def data_list(request):
     if request.method == 'GET':
-        #decoder.checkAuthorization(request)
+        # decoder.checkAuthorization(request)
         users = User.objects.all()
 
         for key in request.GET.keys():
@@ -81,6 +81,7 @@ def data_detail_profile(request, username):
         else:
             raise NotFound("User not found.")
     elif request.method == "PUT":
+        decoder.checkAuthorization(request)
         focus = User.objects.get(username=username)
         prof_serializer = ProfileSerializer(focus, data=request.data)
         if prof_serializer.is_valid():
@@ -91,7 +92,6 @@ def data_detail_profile(request, username):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def data_detail(request, pk):
-    #decoder.checkAuthorization(request)
     try:
         focus = User.objects.get(pk=pk)
     except User.DoesNotExist:
@@ -101,11 +101,13 @@ def data_detail(request, pk):
         user_serializer = UserSerializer(focus)
         return Response(user_serializer.data)
     elif request.method == "PUT":
+        decoder.checkAuthorization(request)
         user_serializer = UserSerializer(focus, data=request.data)
         if user_serializer.is_valid():
             user_serializer.save()
             return Response(user_serializer.data, status=status.HTTP_202_ACCEPTED)
         return Response(user_serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     elif request.method == "DELETE":
+        decoder.checkAuthorization(request)
         focus.delete()
         return Response({'message': 'User was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)

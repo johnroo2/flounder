@@ -52,7 +52,6 @@ export default function Problem(){
                 setLoading(false)
             }
             catch(err){
-                console.log(err);
                 setNotFound(true);
                 setLoading(false)
             }
@@ -137,7 +136,6 @@ export default function Problem(){
         }
         catch(err){
             console.log(err)
-            alert("error!")
         }
     }
 
