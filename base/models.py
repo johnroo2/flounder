@@ -42,7 +42,7 @@ class User(models.Model):
             "updatedAt": self.updatedAt,
             "isAdmin": self.isAdmin,
             "isMod": self.isMod,
-            "createdAt": self.createdAt,
+            "createdAt": self.createdAt, 
         }
     
     def updatepoints(self):
